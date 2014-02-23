@@ -1,0 +1,40 @@
+asciidoctor-ant-plugin
+========================
+:asciidoc-url: http://asciidoc.org
+:asciidoctor-url: http://asciidoctor.org
+:asciidoctorj-url: https://github.com/asciidoctor/asciidoctorj
+:issues: https://github.com/binout/asciidoctor-ant/issues
+:ant-url: http://ant.apache.org/
+:ant-classloader-url: http://enitsys.sourceforge.net/ant-classloadertask/
+:issue-url: https://github.com/asciidoctor/asciidoctorj/issues/107
+
+The asciidoctor-ant is the unofficial means of using {asciidoctor-url}[Asciidoctor] to render all your {asciidoc-url}[AsciiDoc] documentation using {ant-url}[Apache Ant].
+
+== Installation
+
+=== Prerequesites
+
+* Ant (minimun Ant 1.8.0)
+* {ant-classloader-url}[ant-classloadertask], as a workaround of known {issue-url}[issue] of {asciidoctorj-url}[Asciidoctor java integration].
+
+=== Declaration
+
+[source,xml]
+----
+...
+    <target name="asciidoctor-def">
+        <taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="lib/ant-classloadertask.jar"/>
+        <classloader loader="thread" classpath="lib/asciidoctor-ant.jar"/>
+        <taskdef name="asciidoctor" classname="org.asciidoctor.ant.AsciidoctorAntTask"/>
+    </target>
+...
+----
+
+== Usage
+
+[source,xml]
+----
+...
+   <asciidoctor sourceDirectory="src/test/resources" outputDirectory="target"/>
+...
+----

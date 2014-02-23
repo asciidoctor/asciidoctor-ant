@@ -1,0 +1,17 @@
+<project default="use">
+
+    <target name="asciidoctor-def">
+        <taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="lib/ant-classloadertask.jar"/>
+        <classloader loader="thread" classpath="target/asciidoctor-ant-1.0-SNAPSHOT.jar"/>
+        <taskdef name="asciidoctor" classname="org.asciidoctor.ant.AsciidoctorAntTask"/>
+    </target>
+
+    <target name="readme" depends="asciidoctor-def">
+        <asciidoctor sourceDirectory="${basedir}" outputDirectory="target"/>
+    </target>
+
+    <target name="use" depends="asciidoctor-def">
+        <asciidoctor sourceDirectory="src/test/resources" outputDirectory="target"/>
+    </target>
+
+</project>
