@@ -81,6 +81,7 @@ public class AsciidoctorAntTask extends Task {
         attributes.setImagesDir(imagesDir);
 
         Options options = new Options();
+        options.setBaseDir(getProject().getBaseDir().getAbsolutePath());
         options.setToDir(outputDirectory);
         options.setBackend(backend);
         options.setDocType(doctype);
@@ -98,7 +99,7 @@ public class AsciidoctorAntTask extends Task {
             }
         } else {
             log("Render "+ sourceDocumentName + " from " + sourceDirectory + " to " + outputDirectory + " with backend=" + backend);
-            asciidoctor.renderFile(new File(outputDirectory, sourceDocumentName), options);
+            asciidoctor.renderFile(new File(sourceDirectory, sourceDocumentName), options);
         }
     }
 

@@ -4,7 +4,7 @@
   <groupId>asciidoctor-ant</groupId>
   <artifactId>asciidoctor-ant</artifactId>
   <name>asciidoctor-ant</name>
-  <version>0.1.4.0-SNAPSHOT</version>
+  <version>0.1.4-alpha</version>
   <description>Ant task to render your AsciiDoc documentation</description>
   <url>https://github.com/binout/asciidoctor-ant</url>
   <issueManagement>
