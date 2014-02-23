@@ -3,17 +3,38 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>asciidoctor-ant</groupId>
   <artifactId>asciidoctor-ant</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <name>asciidoctor-ant</name>
+  <version>0.1.4.0-SNAPSHOT</version>
+  <description>Ant task to render your AsciiDoc documentation</description>
+  <url>https://github.com/binout/asciidoctor-ant</url>
+  <issueManagement>
+    <system>github</system>
+    <url>https://github.com/binout/asciidoctor-ant</url>
+  </issueManagement>
+  <ciManagement>
+    <system>buildhive</system>
+    <url>https://buildhive.cloudbees.com/job/binout/job/asciidoctor-ant/</url>
+  </ciManagement>
+  <inceptionYear>2014</inceptionYear>
+  <developers>
+    <developer>
+      <id>binout</id>
+      <name>Benoit Prioux</name>
+      <email>binout@gmail.com</email>
+      <url>http://javaonemorething.wordpress.com</url>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+      <timezone>+1</timezone>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:ssh://git@github.com/binout/asciidoctor-ant.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/binout/asciidoctor-ant.git</developerConnection>
+    <url>https://github.com/binout/asciidoctor-ant</url>
+  </scm>
   <build>
     <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
         <version>2.2</version>
@@ -42,5 +63,12 @@
       </exclusions>
     </dependency>
   </dependencies>
+  <properties>
+    <asciidoctor.version>0.1.4</asciidoctor.version>
+    <ant.version>1.8.0</ant.version>
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.target>1.6</maven.compiler.target>
+  </properties>
 </project>
 
