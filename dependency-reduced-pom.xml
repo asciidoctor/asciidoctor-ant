@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>asciidoctor-ant</groupId>
+  <groupId>org.asciidoctor</groupId>
   <artifactId>asciidoctor-ant</artifactId>
   <name>asciidoctor-ant</name>
   <version>0.1.4-alpha</version>
@@ -34,7 +34,18 @@
     <url>https://github.com/binout/asciidoctor-ant</url>
   </scm>
   <build>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-webdav</artifactId>
+        <version>1.0-beta-2</version>
+      </extension>
+    </extensions>
     <plugins>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.7</version>
+      </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
         <version>2.2</version>
@@ -49,6 +60,26 @@
       </plugin>
     </plugins>
   </build>
+  <repositories>
+    <repository>
+      <releases />
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>binout-cloudbees-release</id>
+      <name>binout-cloudbees-release</name>
+      <url>https://repository-binout.forge.cloudbees.com/release/</url>
+    </repository>
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots />
+      <id>binout-cloudbees-snapshot</id>
+      <name>binout-cloudbees-snapshot</name>
+      <url>https://repository-binout.forge.cloudbees.com/snapshot/</url>
+    </repository>
+  </repositories>
   <dependencies>
     <dependency>
       <groupId>org.apache.ant</groupId>
@@ -63,6 +94,19 @@
       </exclusions>
     </dependency>
   </dependencies>
+  <distributionManagement>
+    <repository>
+      <id>binout-cloudbees-release</id>
+      <name>binout-cloudbees-release</name>
+      <url>dav:https://repository-binout.forge.cloudbees.com/release/</url>
+    </repository>
+    <snapshotRepository>
+      <id>binout-cloudbees-snapshot</id>
+      <name>binout-cloudbees-snapshot</name>
+      <url>dav:https://repository-binout.forge.cloudbees.com/snapshot/</url>
+    </snapshotRepository>
+    <downloadUrl>https://github.com/binout/asciidoctor-ant</downloadUrl>
+  </distributionManagement>
   <properties>
     <asciidoctor.version>0.1.4</asciidoctor.version>
     <ant.version>1.8.0</ant.version>
