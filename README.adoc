@@ -1,4 +1,4 @@
-= asciidoctor-ant-plugin
+= asciidoctor-ant Task
 ========================
 :asciidoc-url: http://asciidoc.org
 :asciidoctor-url: http://asciidoctor.org
@@ -7,6 +7,7 @@
 :ant-url: http://ant.apache.org/
 :ant-classloader-url: http://enitsys.sourceforge.net/ant-classloadertask/
 :issue-url: https://github.com/asciidoctor/asciidoctorj/issues/107
+:binout-repo: http://repository-binout.forge.cloudbees.com/release/org/asciidoctor/asciidoctor-ant/
 
 The asciidoctor-ant is the unofficial means of using {asciidoctor-url}[Asciidoctor] to render all your {asciidoc-url}[AsciiDoc] documentation using {ant-url}[Apache Ant].
 
@@ -17,18 +18,24 @@ The asciidoctor-ant is the unofficial means of using {asciidoctor-url}[Asciidoct
 * Ant (minimun Ant 1.8.0)
 * {ant-classloader-url}[ant-classloadertask], as a workaround of known {issue-url}[issue] of {asciidoctorj-url}[Asciidoctor java integration].
 
+=== Download
+
+You can download the uber jar of asciidoctor-ant in {binout-repo}[binout repository]. This jar contains the Ant task and its dependecies : JRuby and {asciidoctorj-url}[asciidoctorj].
+
 === Declaration
 
 [source,xml]
 ----
 ...
     <target name="asciidoctor-def">
-        <taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="lib/ant-classloadertask.jar"/>
-        <classloader loader="thread" classpath="lib/asciidoctor-ant.jar"/>
+        <taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="lib/ant-classloadertask.jar"/>          <1>
+        <classloader loader="thread" classpath="lib/asciidoctor-ant.jar"/>                                           <1>
         <taskdef name="asciidoctor" classname="org.asciidoctor.ant.AsciidoctorAntTask"/>
     </target>
 ...
 ----
+
+<1> "lib" is a directory containing ant-classloadertask and the uber jar asciidoctor-ant.jar
 
 == Usage
 
@@ -38,3 +45,16 @@ The asciidoctor-ant is the unofficial means of using {asciidoctor-url}[Asciidoct
    <asciidoctor sourceDirectory="src/test/resources" outputDirectory="target"/>
 ...
 ----
+
+=== Configuration options
+
+There are several configuration options that the asciidoctor-ant Task uses. The options are similar to asciidoctor-maven-plugin :
+
+sourceDirectory:: the source directory of Asciidoc files (mandatory)
+sourceDocumentName:: an override to process a single source file; defaults to all files in `${sourceDirectory}`
+outputDirectory:: the ouput directory (mandatory)
+imagesDir:: defaults to `images`, which will be relative to the directory containing the source files
+backend:: defaults to `docbook`
+doctype:: defaults to `article`
+headerFooter:: defaults to `true`
+compact:: defaults to `false`
