@@ -20,7 +20,7 @@ The asciidoctor-ant is the unofficial means of using {asciidoctor-url}[Asciidoct
 
 === Download
 
-You can download the uber jar of asciidoctor-ant in {binout-repo}[binout repository]. This jar contains the Ant task and its dependecies : JRuby and {asciidoctorj-url}[asciidoctorj].
+You can download the uber jar of asciidoctor-ant in {binout-repo}[binout repository]. This jar contains the Ant task and its dependencies : JRuby and {asciidoctorj-url}[asciidoctorj].
 
 === Declaration
 
@@ -56,5 +56,8 @@ outputDirectory:: the ouput directory (mandatory)
 imagesDir:: defaults to `images`, which will be relative to the directory containing the source files
 backend:: defaults to `docbook`
 doctype:: defaults to `article`
+eruby:: defaults to erb, the version used in jruby
 headerFooter:: defaults to `true`
 compact:: defaults to `false`
+sourceHighlighter:: enables and sets the source highlighter (currently `coderay` or `highlightjs` are supported)
+embedAssets:: Embedd the CSS file, etc into the output, defaults to `false`
