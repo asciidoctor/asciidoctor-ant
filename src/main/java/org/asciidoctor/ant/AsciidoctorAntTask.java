@@ -38,46 +38,57 @@ public class AsciidoctorAntTask extends Task {
     private boolean embedAssets = false;
     private String eruby = "";
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setSourceDirectory(String sourceDirectory) {
         this.sourceDirectory = sourceDirectory;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setOutputDirectory(String outputDirectory) {
         this.outputDirectory = outputDirectory;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setSourceDocumentName(String sourceDocumentName) {
         this.sourceDocumentName = sourceDocumentName;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setBackend(String backend) {
         this.backend = backend;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setImagesDir(String imagesDir) {
         this.imagesDir = imagesDir;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setDoctype(String doctype) {
         this.doctype = doctype;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setCompact(boolean compact) {
         this.compact = compact;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setHeaderFooter(boolean headerFooter) {
         this.headerFooter = headerFooter;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setSourceHighlighter(String sourceHighlighter) {
         this.sourceHighlighter = sourceHighlighter;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setEmbedAssets(boolean embedAssets) {
         this.embedAssets = embedAssets;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setEruby(String eruby) {
         this.eruby = eruby;
     }
