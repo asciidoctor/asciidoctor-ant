@@ -1,6 +1,6 @@
 <project default="use">
 
-    <property name="version" value="0.1.4-SNAPSHOT"/>
+    <property name="version" value="0.1.4-alpha2"/>
 
     <target name="asciidoctor-def">
         <taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="lib/ant-classloadertask.jar"/>
@@ -19,11 +19,15 @@
     <target name="use-full" depends="asciidoctor-def">
         <asciidoctor sourceDirectory="src/test/resources" outputDirectory="target"
                      sourceDocumentName="test.asciidoc"
-                     backend="html"
+                     backend="html5"
                      imagesDir="images"
                      doctype="articles"
-                     headerFooter="false"
-                     compact="true"/>
+                     headerFooter="true"
+                     compact="true"
+                     sourceHighlighter="highlightjs"
+                     embedAssets="false"
+                     eruby=""
+                />
     </target>
 
 </project>

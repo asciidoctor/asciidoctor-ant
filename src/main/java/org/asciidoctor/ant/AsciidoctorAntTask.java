@@ -34,7 +34,9 @@ public class AsciidoctorAntTask extends Task {
     private String doctype = "article";
     private boolean compact = false;
     private boolean headerFooter = true;
-
+    private String sourceHighlighter;
+    private boolean embedAssets = false;
+    private String eruby = "";
 
     public void setSourceDirectory(String sourceDirectory) {
         this.sourceDirectory = sourceDirectory;
@@ -68,6 +70,18 @@ public class AsciidoctorAntTask extends Task {
         this.headerFooter = headerFooter;
     }
 
+    public void setSourceHighlighter(String sourceHighlighter) {
+        this.sourceHighlighter = sourceHighlighter;
+    }
+
+    public void setEmbedAssets(boolean embedAssets) {
+        this.embedAssets = embedAssets;
+    }
+
+    public void setEruby(String eruby) {
+        this.eruby = eruby;
+    }
+
     @Override
     public void execute() throws BuildException {
         checkMandatoryParameter("sourceDirectory", sourceDirectory);
@@ -79,8 +93,19 @@ public class AsciidoctorAntTask extends Task {
 
         Attributes attributes = new Attributes();
         attributes.setImagesDir(imagesDir);
+        if (sourceHighlighter != null) {
+            attributes.setSourceHighlighter(sourceHighlighter);
+        }
+        if (embedAssets) {
+            attributes.setLinkCss(false);
+            attributes.setDataUri(true);
+        }
+
+        attributes.setCopyCss(false);
 
         Options options = new Options();
+        options.setSafe(SafeMode.SAFE);
+        options.setEruby(eruby);
         options.setBaseDir(getProject().getBaseDir().getAbsolutePath());
         options.setToDir(outputDirectory);
         options.setBackend(backend);
