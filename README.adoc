@@ -9,6 +9,8 @@
 :issue-url: https://github.com/asciidoctor/asciidoctorj/issues/107
 :binout-repo: http://repository-binout.forge.cloudbees.com/release/org/asciidoctor/asciidoctor-ant/
 
+image:https://buildhive.cloudbees.com/job/binout/job/asciidoctor-ant/badge/icon["Build Status", link="https://buildhive.cloudbees.com/job/binout/job/asciidoctor-ant/"]
+
 The asciidoctor-ant is the unofficial means of using {asciidoctor-url}[Asciidoctor] to render all your {asciidoc-url}[AsciiDoc] documentation using {ant-url}[Apache Ant].
 
 == Installation
