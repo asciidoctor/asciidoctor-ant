@@ -65,3 +65,21 @@ templateDir:: disabled by default, defaults to `null`
 templateEngine:: disabled by defaultÈ
 sourceHighlighter:: enables and sets the source highlighter (currently `coderay` or `highlightjs` are supported)
 embedAssets:: Embedd the CSS file, etc into the output, defaults to `false`
+
+==== Builtin attributes
+
+There are various attributes Asciidoctor recognizes. Below is a list of them and what they do::
+
+title:: An override for the title of the document.
+
+[source,xml]
+----
+...
+   <asciidoctor sourceDirectory="src/test/resources" outputDirectory="target">
+        <attribute key="title" value="Asciidoc Ant"/>
+   </asciidoctor>
+...
+----
+
+Many other attributes are possible. Until a canonical list is created for asciidoctor, you may find http://asciidoc.org/userguide.html#X88[this list] to be helpful.
+

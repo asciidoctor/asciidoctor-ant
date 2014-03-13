@@ -21,6 +21,7 @@ import org.apache.tools.ant.Task;
 import org.asciidoctor.*;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AsciidoctorAntTask extends Task {
@@ -39,6 +40,89 @@ public class AsciidoctorAntTask extends Task {
     private String eruby = "";
     private String templateDir;
     private String templateEngine;
+    private List<Attribute> attributes = new ArrayList<Attribute>();
+
+    @Override
+    public void execute() throws BuildException {
+        checkMandatoryParameter("sourceDirectory", sourceDirectory);
+        checkMandatoryParameter("outputDirectory", outputDirectory);
+
+        ensureOutputExists();
+
+        Asciidoctor asciidoctor = Asciidoctor.Factory.create();
+
+        AttributesBuilder attributesBuilder = buildAttributes();
+        OptionsBuilder optionsBuilder = buildOptions();
+        optionsBuilder.attributes(attributesBuilder.get());
+        Options options = optionsBuilder.get();
+
+        DirectoryWalker directoryWalker = new AsciiDocDirectoryWalker(sourceDirectory);
+        List<File> asciidocFiles = directoryWalker.scan();
+
+        if (sourceDocumentName == null) {
+            log("Render asciidoc files from " + sourceDirectory + " to " + outputDirectory + " with backend=" + backend);
+            for (File file : asciidocFiles) {
+                asciidoctor.renderFile(file, options);
+            }
+        } else {
+            log("Render "+ sourceDocumentName + " from " + sourceDirectory + " to " + outputDirectory + " with backend=" + backend);
+            asciidoctor.renderFile(new File(sourceDirectory, sourceDocumentName), options);
+        }
+    }
+
+    private OptionsBuilder buildOptions() {
+        OptionsBuilder optionsBuilder = OptionsBuilder.options();
+        optionsBuilder.safe(SafeMode.SAFE).eruby(eruby);
+        optionsBuilder.baseDir(getProject().getBaseDir()).toDir(new File(outputDirectory));
+        optionsBuilder.backend(backend).docType(doctype).compact(compact).headerFooter(headerFooter);
+        if (templateEngine != null) {
+            optionsBuilder.templateEngine(templateEngine);
+        }
+        if (templateDir != null) {
+            optionsBuilder.templateDir(new File(templateDir));
+        }
+        return optionsBuilder;
+    }
+
+    private AttributesBuilder buildAttributes() {
+        AttributesBuilder attributesBuilder = AttributesBuilder.attributes();
+        attributesBuilder.imagesDir(imagesDir);
+        if (sourceHighlighter != null) {
+            attributesBuilder.sourceHighlighter(sourceHighlighter);
+        }
+        if (embedAssets) {
+            attributesBuilder.linkCss(false);
+            attributesBuilder.dataUri(true);
+        }
+        attributesBuilder.copyCss(false);
+        // TODO Figure out how to reliably set other values (like boolean values, dates, times, etc)
+        for (Attribute attribute : attributes) {
+            if ("true".equals(attribute.getValue()) || "false".equals(attribute.getValue())) {
+                attributesBuilder.attribute(attribute.getKey(), Attributes.toAsciidoctorFlag(Boolean.valueOf(attribute.getValue())));
+                continue;
+            }
+            // Can't do anything about dates and times because all that logic is private in Attributes
+            attributesBuilder.attribute(attribute.getKey(), attribute.getValue());
+        }
+        return attributesBuilder;
+    }
+
+    private void checkMandatoryParameter(String name, Object value) {
+        if (value == null) {
+            throw new BuildException(name + " is mandatory");
+        }
+    }
+
+    private void ensureOutputExists() {
+        File outputFile = new File(outputDirectory);
+        if (!outputFile.exists()) {
+            if (!outputFile.mkdirs()) {
+                log("Can't create " + outputFile.getPath(), Project.MSG_ERR);
+            }
+        }
+    }
+
+    // Setters for Ant Task
 
     @SuppressWarnings("UnusedDeclaration")
     public void setSourceDirectory(String sourceDirectory) {
@@ -105,71 +189,33 @@ public class AsciidoctorAntTask extends Task {
         this.templateEngine = templateEngine;
     }
 
-    @Override
-    public void execute() throws BuildException {
-        checkMandatoryParameter("sourceDirectory", sourceDirectory);
-        checkMandatoryParameter("outputDirectory", outputDirectory);
+    @SuppressWarnings("UnusedDeclaration")
+    public Attribute createAttribute() {
+        Attribute attribute = new Attribute();
+        attributes.add(attribute);
+        return attribute;
+    }
 
-        ensureOutputExists();
+    public class Attribute {
+        private String key;
+        private String value;
 
-        Asciidoctor asciidoctor = Asciidoctor.Factory.create();
-
-        Attributes attributes = new Attributes();
-        attributes.setImagesDir(imagesDir);
-        if (sourceHighlighter != null) {
-            attributes.setSourceHighlighter(sourceHighlighter);
-        }
-        if (embedAssets) {
-            attributes.setLinkCss(false);
-            attributes.setDataUri(true);
+        public String getKey() {
+            return key;
         }
 
-        attributes.setCopyCss(false);
-
-        Options options = new Options();
-        options.setSafe(SafeMode.SAFE);
-        options.setEruby(eruby);
-        options.setBaseDir(getProject().getBaseDir().getAbsolutePath());
-        options.setToDir(outputDirectory);
-        options.setBackend(backend);
-        options.setDocType(doctype);
-        options.setCompact(compact);
-        options.setHeaderFooter(headerFooter);
-        if (templateEngine != null) {
-            options.setTemplateEngine(templateEngine);
+        public String getValue() {
+            return value;
         }
 
-        if (templateDir != null) {
-            options.setTemplateDirs(templateDir);
+        @SuppressWarnings("UnusedDeclaration")
+        public void setKey(String key) {
+            this.key = key;
         }
-        options.setAttributes(attributes);
-
-        DirectoryWalker directoryWalker = new AsciiDocDirectoryWalker(sourceDirectory);
-        List<File> asciidocFiles = directoryWalker.scan();
-
-        if (sourceDocumentName == null) {
-            log("Render asciidoc files from " + sourceDirectory + " to " + outputDirectory + " with backend=" + backend);
-            for (File file : asciidocFiles) {
-                asciidoctor.renderFile(file, options);
-            }
-        } else {
-            log("Render "+ sourceDocumentName + " from " + sourceDirectory + " to " + outputDirectory + " with backend=" + backend);
-            asciidoctor.renderFile(new File(sourceDirectory, sourceDocumentName), options);
+        @SuppressWarnings("UnusedDeclaration")
+        public void setValue(String value) {
+            this.value = value;
         }
     }
 
-    private void checkMandatoryParameter(String name, Object value) {
-        if (value == null) {
-            throw new BuildException(name + " is mandatory");
-        }
-    }
-
-    private void ensureOutputExists() {
-        File outputFile = new File(outputDirectory);
-        if (!outputFile.exists()) {
-            if (!outputFile.mkdirs()) {
-                log("Can't create " + outputFile.getPath(), Project.MSG_ERR);
-            }
-        }
-    }
 }

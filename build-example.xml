@@ -26,8 +26,9 @@
                      compact="true"
                      sourceHighlighter="highlightjs"
                      embedAssets="false"
-                     eruby=""
-                />
+                     eruby="">
+                <attribute key="title" value="Test"/>
+        </asciidoctor>
     </target>
 
 </project>
