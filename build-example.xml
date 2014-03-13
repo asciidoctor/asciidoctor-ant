@@ -1,6 +1,6 @@
 <project default="use">
 
-    <property name="version" value="0.1.4-SNAPSHOT"/>
+    <property name="version" value="0.1.4"/>
 
     <target name="asciidoctor-def">
         <taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="lib/ant-classloadertask.jar"/>
