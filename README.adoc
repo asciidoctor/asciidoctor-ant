@@ -61,5 +61,7 @@ doctype:: defaults to `article`
 eruby:: defaults to erb, the version used in jruby
 headerFooter:: defaults to `true`
 compact:: defaults to `false`
+templateDir:: disabled by default, defaults to `null`
+templateEngine:: disabled by defaultÈ
 sourceHighlighter:: enables and sets the source highlighter (currently `coderay` or `highlightjs` are supported)
 embedAssets:: Embedd the CSS file, etc into the output, defaults to `false`
