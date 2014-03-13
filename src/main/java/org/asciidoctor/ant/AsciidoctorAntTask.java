@@ -37,6 +37,8 @@ public class AsciidoctorAntTask extends Task {
     private String sourceHighlighter;
     private boolean embedAssets = false;
     private String eruby = "";
+    private String templateDir;
+    private String templateEngine;
 
     @SuppressWarnings("UnusedDeclaration")
     public void setSourceDirectory(String sourceDirectory) {
@@ -93,6 +95,16 @@ public class AsciidoctorAntTask extends Task {
         this.eruby = eruby;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
+    public void setTemplateDir(String templateDir) {
+        this.templateDir = templateDir;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public void setTemplateEngine(String templateEngine) {
+        this.templateEngine = templateEngine;
+    }
+
     @Override
     public void execute() throws BuildException {
         checkMandatoryParameter("sourceDirectory", sourceDirectory);
@@ -123,6 +135,13 @@ public class AsciidoctorAntTask extends Task {
         options.setDocType(doctype);
         options.setCompact(compact);
         options.setHeaderFooter(headerFooter);
+        if (templateEngine != null) {
+            options.setTemplateEngine(templateEngine);
+        }
+
+        if (templateDir != null) {
+            options.setTemplateDirs(templateDir);
+        }
         options.setAttributes(attributes);
 
         DirectoryWalker directoryWalker = new AsciiDocDirectoryWalker(sourceDirectory);
