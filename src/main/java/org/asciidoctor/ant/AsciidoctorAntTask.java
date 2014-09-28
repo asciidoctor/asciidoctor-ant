@@ -49,7 +49,7 @@ public class AsciidoctorAntTask extends Task {
 
         ensureOutputExists();
 
-        Asciidoctor asciidoctor = Asciidoctor.Factory.create();
+        Asciidoctor asciidoctor = Asciidoctor.Factory.create(getClass().getClassLoader());
 
         AttributesBuilder attributesBuilder = buildAttributes();
         OptionsBuilder optionsBuilder = buildOptions();

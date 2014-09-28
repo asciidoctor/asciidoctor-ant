@@ -10,7 +10,7 @@
 
     <groupId>org.asciidoctor</groupId>
     <artifactId>asciidoctor-ant</artifactId>
-    <version>0.1.4</version>
+    <version>1.5.0-SNAPSHOT</version>
 
     <packaging>jar</packaging>
     <name>asciidoctor-ant</name>
@@ -62,7 +62,7 @@
         <maven-antrun-plugin.version>1.6</maven-antrun-plugin.version>
         <maven.apache-rat-plugin.version>0.7</maven.apache-rat-plugin.version>
 
-        <asciidoctor.version>0.1.4</asciidoctor.version>
+        <asciidoctor.version>1.5.0</asciidoctor.version>
         <ant.version>1.8.0</ant.version>
     </properties>
 
@@ -75,7 +75,7 @@
         </dependency>
         <dependency>
             <groupId>org.asciidoctor</groupId>
-            <artifactId>asciidoctor-java-integration</artifactId>
+            <artifactId>asciidoctorj</artifactId>
             <version>${asciidoctor.version}</version>
         </dependency>
     </dependencies>
