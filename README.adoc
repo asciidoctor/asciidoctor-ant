@@ -19,7 +19,6 @@ The asciidoctor-ant is the unofficial means of using {asciidoctor-url}[Asciidoct
 === Prerequesites
 
 * Ant (minimun Ant 1.8.0)
-* {ant-classloader-url}[ant-classloadertask], as a workaround of known {issue-url}[issue] of {asciidoctorj-url}[Asciidoctor java integration].
 
 === Download
 
@@ -31,14 +30,12 @@ You can download the uber jar of asciidoctor-ant in {asciidoctor-maven-repo}[Mav
 ----
 ...
     <target name="asciidoctor-def">
-        <taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="lib/ant-classloadertask.jar"/>          <1>
-        <classloader loader="thread" classpath="lib/asciidoctor-ant.jar"/>                                           <1>
-        <taskdef name="asciidoctor" classname="org.asciidoctor.ant.AsciidoctorAntTask"/>
+        <taskdef name="asciidoctor" classname="org.asciidoctor.ant.AsciidoctorAntTask" classpath="lib/asciidoctor-ant.jar"/> <1>
     </target>
 ...
 ----
 
-<1> "lib" is a directory containing ant-classloadertask and the uber jar asciidoctor-ant.jar
+<1> "lib" is a directory containing the uber jar asciidoctor-ant.jar
 
 == Usage
 
