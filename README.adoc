@@ -5,10 +5,7 @@
 :asciidoctorj-url: https://github.com/asciidoctor/asciidoctorj
 :issues: https://github.com/binout/asciidoctor-ant/issues
 :ant-url: http://ant.apache.org/
-:ant-classloader-url: http://enitsys.sourceforge.net/ant-classloadertask/
-:issue-url: https://github.com/asciidoctor/asciidoctorj/issues/107
-:binout-repo: http://repository-binout.forge.cloudbees.com/release/org/asciidoctor/asciidoctor-ant/
-:asciidoctor-maven-repo: http://mvnrepository.com/artifact/org.asciidoctor/asciidoctor-ant/0.1.4
+:asciidoctor-ant-maven-repo: http://mvnrepository.com/artifact/org.asciidoctor/asciidoctor-ant/
 
 image:https://buildhive.cloudbees.com/job/binout/job/asciidoctor-ant/badge/icon["Build Status", link="https://buildhive.cloudbees.com/job/binout/job/asciidoctor-ant/"]
 
@@ -22,7 +19,16 @@ The asciidoctor-ant is the unofficial means of using {asciidoctor-url}[Asciidoct
 
 === Download
 
-You can download the uber jar of asciidoctor-ant in {asciidoctor-maven-repo}[Maven Central]. This jar contains the Ant task and its dependencies : JRuby and {asciidoctorj-url}[asciidoctorj].
+You can download the uber jar of asciidoctor-ant in {asciidoctor-ant-maven-repo}[Maven Central]. This jar contains the Ant task and its dependencies : JRuby and {asciidoctorj-url}[asciidoctorj].
+
+[source,xml]
+.Using Ant
+----
+...
+      <get src="http://repo2.maven.org/maven2/org/asciidoctor/ant/${asciidoctor-version}/asciidoctor-ant-${asciidoctor-version}.jar"
+           dest="lib/asciidoctor-ant.jar" usetimestamp="true"/>
+...
+----
 
 === Declaration
 
