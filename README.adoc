@@ -3,11 +3,11 @@
 :asciidoc-url: http://asciidoc.org
 :asciidoctor-url: http://asciidoctor.org
 :asciidoctorj-url: https://github.com/asciidoctor/asciidoctorj
-:issues: https://github.com/binout/asciidoctor-ant/issues
+:issues: https://github.com/asciidoctor/asciidoctor-ant/issues
 :ant-url: http://ant.apache.org/
 :asciidoctor-ant-maven-repo: http://mvnrepository.com/artifact/org.asciidoctor/asciidoctor-ant/
 
-image:https://buildhive.cloudbees.com/job/binout/job/asciidoctor-ant/badge/icon["Build Status", link="https://buildhive.cloudbees.com/job/binout/job/asciidoctor-ant/"]
+image:https://buildhive.cloudbees.com/job/Asciidoctor/job/asciidoctor-ant/badge/icon["Build Status", link="https://buildhive.cloudbees.com/job/Asciidoctor/job/asciidoctor-ant/"]
 
 The asciidoctor-ant is the unofficial means of using {asciidoctor-url}[Asciidoctor] to render all your {asciidoc-url}[AsciiDoc] documentation using {ant-url}[Apache Ant].
 
