@@ -8,6 +8,7 @@
 :ant-classloader-url: http://enitsys.sourceforge.net/ant-classloadertask/
 :issue-url: https://github.com/asciidoctor/asciidoctorj/issues/107
 :binout-repo: http://repository-binout.forge.cloudbees.com/release/org/asciidoctor/asciidoctor-ant/
+:asciidoctor-maven-repo: http://mvnrepository.com/artifact/org.asciidoctor/asciidoctor-ant/0.1.4
 
 image:https://buildhive.cloudbees.com/job/binout/job/asciidoctor-ant/badge/icon["Build Status", link="https://buildhive.cloudbees.com/job/binout/job/asciidoctor-ant/"]
 
@@ -22,7 +23,7 @@ The asciidoctor-ant is the unofficial means of using {asciidoctor-url}[Asciidoct
 
 === Download
 
-You can download the uber jar of asciidoctor-ant in {binout-repo}[binout repository]. This jar contains the Ant task and its dependencies : JRuby and {asciidoctorj-url}[asciidoctorj].
+You can download the uber jar of asciidoctor-ant in {asciidoctor-maven-repo}[Maven Central]. This jar contains the Ant task and its dependencies : JRuby and {asciidoctorj-url}[asciidoctorj].
 
 === Declaration
 
@@ -68,7 +69,7 @@ embedAssets:: Embedd the CSS file, etc into the output, defaults to `false`
 
 ==== Builtin attributes
 
-There are various attributes Asciidoctor recognizes. Below is a list of them and what they do::
+There are various attributes Asciidoctor recognizes. Below is a list of them and what they do :
 
 title:: An override for the title of the document.
 
@@ -82,4 +83,3 @@ title:: An override for the title of the document.
 ----
 
 Many other attributes are possible. Until a canonical list is created for asciidoctor, you may find http://asciidoc.org/userguide.html#X88[this list] to be helpful.
-
