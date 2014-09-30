@@ -10,13 +10,13 @@
 
     <groupId>org.asciidoctor</groupId>
     <artifactId>asciidoctor-ant</artifactId>
-    <version>0.1.4</version>
+    <version>1.5.0-SNAPSHOT</version>
 
     <packaging>jar</packaging>
     <name>asciidoctor-ant</name>
     <description>Ant task to render your AsciiDoc documentation</description>
     <inceptionYear>2014</inceptionYear>
-    <url>https://github.com/binout/asciidoctor-ant</url>
+    <url>https://github.com/asciidoctor/asciidoctor-ant</url>
 
     <licenses>
         <license>
@@ -30,7 +30,7 @@
         <developer>
             <id>binout</id>
             <name>Benoit Prioux</name>
-            <email>binout@gmail.com</email>
+            <email>benoit.prioux@gmail.com</email>
             <url>http://javaonemorething.wordpress.com</url>
             <timezone>+1</timezone>
             <roles>
@@ -41,16 +41,16 @@
 
     <ciManagement>
         <system>buildhive</system>
-        <url>https://buildhive.cloudbees.com/job/binout/job/asciidoctor-ant/</url>
+        <url>https://buildhive.cloudbees.com/job/Asciidoctor/job/asciidoctor-ant/</url>
     </ciManagement>
     <issueManagement>
         <system>github</system>
-        <url>https://github.com/binout/asciidoctor-ant</url>
+        <url>https://github.com/asciidoctor/asciidoctor-ant</url>
     </issueManagement>
     <scm>
-        <url>https://github.com/binout/asciidoctor-ant</url>
-        <connection>scm:git:ssh://git@github.com/binout/asciidoctor-ant.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/binout/asciidoctor-ant.git</developerConnection>
+        <url>https://github.com/asciidoctor/asciidoctor-ant</url>
+        <connection>scm:git:ssh://git@github.com/asciidoctor/asciidoctor-ant.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/asciidoctor/asciidoctor-ant.git</developerConnection>
     </scm>
 
     <properties>
@@ -62,7 +62,7 @@
         <maven-antrun-plugin.version>1.6</maven-antrun-plugin.version>
         <maven.apache-rat-plugin.version>0.7</maven.apache-rat-plugin.version>
 
-        <asciidoctor.version>0.1.4</asciidoctor.version>
+        <asciidoctor.version>1.5.0</asciidoctor.version>
         <ant.version>1.8.0</ant.version>
     </properties>
 
@@ -75,7 +75,7 @@
         </dependency>
         <dependency>
             <groupId>org.asciidoctor</groupId>
-            <artifactId>asciidoctor-java-integration</artifactId>
+            <artifactId>asciidoctorj</artifactId>
             <version>${asciidoctor.version}</version>
         </dependency>
     </dependencies>
@@ -160,7 +160,7 @@
     </build>
 
     <distributionManagement>
-        <downloadUrl>https://github.com/binout/asciidoctor-ant</downloadUrl>
+        <downloadUrl>https://github.com/asciidoctor/asciidoctor-ant</downloadUrl>
         <snapshotRepository>
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
