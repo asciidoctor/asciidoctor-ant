@@ -5,7 +5,7 @@
 :asciidoctorj-url: https://github.com/asciidoctor/asciidoctorj
 :issues: https://github.com/asciidoctor/asciidoctor-ant/issues
 :ant-url: http://ant.apache.org/
-:asciidoctor-ant-maven-repo: http://mvnrepository.com/artifact/org.asciidoctor/asciidoctor-ant/
+:asciidoctor-ant-maven-repo: http://repo1.maven.org/maven2/org/asciidoctor/asciidoctor-ant/
 
 image:https://buildhive.cloudbees.com/job/Asciidoctor/job/asciidoctor-ant/badge/icon["Build Status", link="https://buildhive.cloudbees.com/job/Asciidoctor/job/asciidoctor-ant/"]
 
@@ -25,7 +25,7 @@ You can download the uber jar of asciidoctor-ant in {asciidoctor-ant-maven-repo}
 .Using Ant
 ----
 ...
-      <get src="http://repo2.maven.org/maven2/org/asciidoctor/ant/${asciidoctor-version}/asciidoctor-ant-${asciidoctor-version}.jar"
+      <get src="http://repo1.maven.org/maven2/org/asciidoctor/asciidoctor-ant/${asciidoctor-version}/asciidoctor-ant-${asciidoctor-version}.jar"
            dest="lib/asciidoctor-ant.jar" usetimestamp="true"/>
 ...
 ----
