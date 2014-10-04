@@ -5,7 +5,8 @@
     </target>
 
     <target name="asciidoctor" depends="asciidoctor-def">
-        <asciidoctor sourceDirectory="${sourceDirectory}"
+        <asciidoctor baseDir="${baseDir}"
+                     sourceDirectory="${sourceDirectory}"
                      sourceDocumentName="${sourceDocumentName}"
                      outputDirectory="${outputDirectory}"
                      backend="${backend}"/>

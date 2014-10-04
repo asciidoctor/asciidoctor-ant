@@ -59,6 +59,8 @@ There are several configuration options that the asciidoctor-ant Task uses. The 
 sourceDirectory:: the source directory of Asciidoc files (mandatory)
 sourceDocumentName:: an override to process a single source file; defaults to all files in `${sourceDirectory}`
 outputDirectory:: the ouput directory (mandatory)
+baseDir:: (not ant's basedir) enables to set the root path for resouces (e.g. included files), defaults to Ant project base directory
+relativeBaseDir:: only used when baseDir is not set, enables to specify that each AsciiDoc file must search for its resources in the same folder (for example, included files). Internally, for each AsciiDoc source, sets `baseDir` to the same path as the source file. Defaults to `false`
 imagesDir:: defaults to `images`, which will be relative to the directory containing the source files
 backend:: defaults to `docbook`
 doctype:: defaults to `article`

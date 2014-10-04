@@ -40,7 +40,8 @@ public class AsciidoctorAntTask extends Task {
     private String eruby = "";
     private String templateDir;
     private String templateEngine;
-    private File baseDir = File.listRoots()[0];
+    private String baseDir;
+    private boolean relativeBaseDir = false;
     private List<Attribute> attributes = new ArrayList<Attribute>();
 
     @Override
@@ -55,7 +56,6 @@ public class AsciidoctorAntTask extends Task {
         AttributesBuilder attributesBuilder = buildAttributes();
         OptionsBuilder optionsBuilder = buildOptions();
         optionsBuilder.attributes(attributesBuilder.get());
-        Options options = optionsBuilder.get();
 
         DirectoryWalker directoryWalker = new AsciiDocDirectoryWalker(sourceDirectory);
         List<File> asciidocFiles = directoryWalker.scan();
@@ -63,18 +63,20 @@ public class AsciidoctorAntTask extends Task {
         if (sourceDocumentName == null) {
             log("Render asciidoc files from " + sourceDirectory + " to " + outputDirectory + " with backend=" + backend);
             for (File file : asciidocFiles) {
-                asciidoctor.renderFile(file, options);
+                setDestinationPaths(optionsBuilder, file);
+                asciidoctor.renderFile(file, optionsBuilder.get());
             }
         } else {
-            log("Render "+ sourceDocumentName + " from " + sourceDirectory + " to " + outputDirectory + " with backend=" + backend);
-            asciidoctor.renderFile(new File(sourceDirectory, sourceDocumentName), options);
+            log("Render " + sourceDocumentName + " from " + sourceDirectory + " to " + outputDirectory + " with backend=" + backend);
+            File file = new File(sourceDirectory, sourceDocumentName);
+            setDestinationPaths(optionsBuilder, file);
+            asciidoctor.renderFile(file, optionsBuilder.get());
         }
     }
 
     private OptionsBuilder buildOptions() {
         OptionsBuilder optionsBuilder = OptionsBuilder.options();
         optionsBuilder.safe(SafeMode.SAFE).eruby(eruby);
-        optionsBuilder.baseDir(baseDir).toDir(new File(outputDirectory));
         optionsBuilder.backend(backend).docType(doctype).compact(compact).headerFooter(headerFooter);
         if (templateEngine != null) {
             optionsBuilder.templateEngine(templateEngine);
@@ -83,6 +85,19 @@ public class AsciidoctorAntTask extends Task {
             optionsBuilder.templateDir(new File(templateDir));
         }
         return optionsBuilder;
+    }
+
+    private void setDestinationPaths(OptionsBuilder optionsBuilder, final File sourceFile)  {
+        if (baseDir != null) {
+            optionsBuilder.baseDir(new File(baseDir));
+        } else {
+            if (relativeBaseDir) {
+                optionsBuilder.baseDir(sourceFile.getParentFile());
+            } else {
+                optionsBuilder.baseDir(getProject().getBaseDir());
+            }
+        }
+        optionsBuilder.toDir(new File(outputDirectory));
     }
 
     private AttributesBuilder buildAttributes() {
@@ -188,6 +203,16 @@ public class AsciidoctorAntTask extends Task {
     @SuppressWarnings("UnusedDeclaration")
     public void setTemplateEngine(String templateEngine) {
         this.templateEngine = templateEngine;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public void setBaseDir(String baseDir) {
+        this.baseDir = baseDir;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public void setRelativeBaseDir(boolean relativeBaseDir) {
+        this.relativeBaseDir = relativeBaseDir;
     }
 
     @SuppressWarnings("UnusedDeclaration")
