@@ -40,6 +40,7 @@ public class AsciidoctorAntTask extends Task {
     private String eruby = "";
     private String templateDir;
     private String templateEngine;
+    private File baseDir = File.listRoots()[0];
     private List<Attribute> attributes = new ArrayList<Attribute>();
 
     @Override
@@ -73,7 +74,7 @@ public class AsciidoctorAntTask extends Task {
     private OptionsBuilder buildOptions() {
         OptionsBuilder optionsBuilder = OptionsBuilder.options();
         optionsBuilder.safe(SafeMode.SAFE).eruby(eruby);
-        optionsBuilder.baseDir(getProject().getBaseDir()).toDir(new File(outputDirectory));
+        optionsBuilder.baseDir(baseDir).toDir(new File(outputDirectory));
         optionsBuilder.backend(backend).docType(doctype).compact(compact).headerFooter(headerFooter);
         if (templateEngine != null) {
             optionsBuilder.templateEngine(templateEngine);
