@@ -61,9 +61,15 @@
         <maven-shade-plugin.version>2.2</maven-shade-plugin.version>
         <maven-antrun-plugin.version>1.6</maven-antrun-plugin.version>
         <maven.apache-rat-plugin.version>0.7</maven.apache-rat-plugin.version>
+        <maven.jacoco-maven-plugin.version>0.7.2.201409121644</maven.jacoco-maven-plugin.version>
 
         <asciidoctor.version>1.5.0</asciidoctor.version>
         <ant.version>1.8.0</ant.version>
+
+        <junit.version>4.11</junit.version>
+        <assertj-core.version>1.6.0</assertj-core.version>
+        <commons-io.version>2.4</commons-io.version>
+        <junit-params.version>1.0.3</junit-params.version>
     </properties>
 
     <dependencies>
@@ -77,6 +83,31 @@
             <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctorj</artifactId>
             <version>${asciidoctor.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>pl.pragmatists</groupId>
+            <artifactId>JUnitParams</artifactId>
+            <version>${junit-params.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -133,25 +164,21 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>${maven-antrun-plugin.version}</version>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${maven.jacoco-maven-plugin.version}</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
-                        <configuration>
-                            <target>
-                                <property name="version" value="${project.version}" />
-                                <ant antfile="${basedir}/build-example.xml">
-                                    <!-- Test minimal use of Ant Target -->
-                                    <target name="use" />
-                                    <!-- Test maximal use of Ant Target -->
-                                    <target name="use-full" />
-                                </ant>
-                            </target>
-                        </configuration>
+                        <id>default-prepare-agent</id>
                         <goals>
-                            <goal>run</goal>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>default-report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
                         </goals>
                     </execution>
                 </executions>
