@@ -62,6 +62,7 @@ public class AsciidoctorAntTaskTest {
         File target = folder.newFolder("asciidoctor");
         String outputDirectory = target.getAbsolutePath();
         String document = "simple.adoc";
+        antExecutor.setProperty("baseDir", "/");
         antExecutor.setProperty("sourceDirectory", sourceDirectory(document));
         antExecutor.setProperty("outputDirectory", outputDirectory);
         antExecutor.setProperty("sourceDocumentName", document);
