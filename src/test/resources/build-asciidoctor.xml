@@ -12,4 +12,13 @@
                      backend="${backend}"/>
     </target>
 
+    <target name="asciidoctor-txt" depends="asciidoctor-def">
+        <asciidoctor baseDir="${baseDir}"
+                     sourceDirectory="${sourceDirectory}"
+                     outputDirectory="${outputDirectory}"
+                     backend="${backend}"
+                     extensions="txt">
+        </asciidoctor>
+    </target>
+
 </project>
