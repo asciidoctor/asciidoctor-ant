@@ -22,6 +22,8 @@ import org.asciidoctor.*;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class AsciidoctorAntTask extends Task {
@@ -42,6 +44,7 @@ public class AsciidoctorAntTask extends Task {
     private String templateEngine;
     private String baseDir;
     private boolean relativeBaseDir = false;
+    private String extensions;
     private List<Attribute> attributes = new ArrayList<Attribute>();
 
     @Override
@@ -57,12 +60,9 @@ public class AsciidoctorAntTask extends Task {
         OptionsBuilder optionsBuilder = buildOptions();
         optionsBuilder.attributes(attributesBuilder.get());
 
-        DirectoryWalker directoryWalker = new AsciiDocDirectoryWalker(sourceDirectory);
-        List<File> asciidocFiles = directoryWalker.scan();
-
         if (sourceDocumentName == null) {
             log("Render asciidoc files from " + sourceDirectory + " to " + outputDirectory + " with backend=" + backend);
-            for (File file : asciidocFiles) {
+            for (File file : scanSourceFiles()) {
                 setDestinationPaths(optionsBuilder, file);
                 asciidoctor.renderFile(file, optionsBuilder.get());
             }
@@ -88,16 +88,22 @@ public class AsciidoctorAntTask extends Task {
     }
 
     private void setDestinationPaths(OptionsBuilder optionsBuilder, final File sourceFile)  {
+        optionsBuilder.baseDir(computeBaseDir(sourceFile));
+        optionsBuilder.toDir(new File(outputDirectory));
+    }
+
+    private File computeBaseDir(File sourceFile) {
+        File baseDirFile;
         if (baseDir != null) {
-            optionsBuilder.baseDir(new File(baseDir));
+            baseDirFile = new File(baseDir);
         } else {
             if (relativeBaseDir) {
-                optionsBuilder.baseDir(sourceFile.getParentFile());
+                baseDirFile = sourceFile.getParentFile();
             } else {
-                optionsBuilder.baseDir(getProject().getBaseDir());
+                baseDirFile = getProject().getBaseDir();
             }
         }
-        optionsBuilder.toDir(new File(outputDirectory));
+        return baseDirFile;
     }
 
     private AttributesBuilder buildAttributes() {
@@ -135,6 +141,53 @@ public class AsciidoctorAntTask extends Task {
             if (!outputFile.mkdirs()) {
                 log("Can't create " + outputFile.getPath(), Project.MSG_ERR);
             }
+        }
+    }
+
+    private List<File> scanSourceFiles() {
+        final List<File> asciidoctorFiles;
+        String absoluteSourceDirectory = sourceDirectory;
+        if (extensions == null || extensions.isEmpty()) {
+            final DirectoryWalker directoryWalker = new AsciiDocDirectoryWalker(absoluteSourceDirectory);
+            asciidoctorFiles = directoryWalker.scan();
+        } else {
+            final DirectoryWalker directoryWalker = new CustomExtensionDirectoryWalker(absoluteSourceDirectory, Arrays.asList(extensions.split(",")));
+            asciidoctorFiles = directoryWalker.scan();
+        }
+        for (Iterator<File> iter = asciidoctorFiles.iterator(); iter.hasNext();) {
+            File f = iter.next();
+            do {
+                // stop when we hit the source directory root
+                if (absoluteSourceDirectory.equals(f.getAbsolutePath())) {
+                    break;
+                }
+                // skip if the filename or directory begins with _
+                if (f.getName().startsWith("_")) {
+                    iter.remove();
+                    break;
+                }
+            } while ((f = f.getParentFile()) != null);
+        }
+        return asciidoctorFiles;
+    }
+
+    private static class CustomExtensionDirectoryWalker extends AbstractDirectoryWalker {
+        private final List<String> extensions;
+
+        public CustomExtensionDirectoryWalker(final String absolutePath, final List<String> extensions) {
+            super(absolutePath);
+            this.extensions = extensions;
+        }
+
+        @Override
+        protected boolean isAcceptedFile(final File filename) {
+            final String name = filename.getName();
+            for (final String extension : extensions) {
+                if (name.endsWith(extension)) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
@@ -213,6 +266,11 @@ public class AsciidoctorAntTask extends Task {
     @SuppressWarnings("UnusedDeclaration")
     public void setRelativeBaseDir(boolean relativeBaseDir) {
         this.relativeBaseDir = relativeBaseDir;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public void setExtensions(String extensions) {
+        this.extensions = extensions;
     }
 
     @SuppressWarnings("UnusedDeclaration")

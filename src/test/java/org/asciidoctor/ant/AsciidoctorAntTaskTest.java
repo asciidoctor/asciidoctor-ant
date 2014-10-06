@@ -36,6 +36,8 @@ public class AsciidoctorAntTaskTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
+    private  AntExecutor antExecutor = new AntExecutor(buildXml("build-asciidoctor.xml"));
+
     private String buildXml(String fileName) {
         URL resource = Thread.currentThread().getContextClassLoader().getResource(fileName);
         if (resource == null) {
@@ -52,15 +54,18 @@ public class AsciidoctorAntTaskTest {
         return new File(resource.getFile()).getParent();
     }
 
+    private String outputDirectory(String dirName) throws IOException {
+        File target = folder.newFolder(dirName);
+        return target.getAbsolutePath();
+    }
+
     @Test
     @Parameters({
             "docbook, simple.xml, <?xml version=\"1.0\" encoding=\"UTF-8\"?>",
             "html5, simple.html, <!DOCTYPE html>"
     })
     public void should_manage_backend(String backend, String outputFile, String expectedContent) throws IOException {
-        AntExecutor antExecutor = new AntExecutor(buildXml("build-asciidoctor.xml"));
-        File target = folder.newFolder("asciidoctor");
-        String outputDirectory = target.getAbsolutePath();
+        String outputDirectory = outputDirectory("asciidoctor");
         String document = "simple.adoc";
         antExecutor.setProperty("baseDir", "/");
         antExecutor.setProperty("sourceDirectory", sourceDirectory(document));
@@ -73,5 +78,19 @@ public class AsciidoctorAntTaskTest {
         File out = new File(outputDirectory, outputFile);
         assertThat(out).exists();
         assertThat(IOUtils.toString(new FileInputStream(out))).startsWith(expectedContent);
+    }
+
+    @Test
+    public void should_manage_extensions() throws IOException {
+        String outputDirectory = outputDirectory("asciidoctor-ext");
+        antExecutor.setProperty("baseDir", "/");
+        antExecutor.setProperty("sourceDirectory", sourceDirectory("extensions/simple.txt"));
+        antExecutor.setProperty("outputDirectory", outputDirectory);
+        antExecutor.setProperty("backend", "docbook");
+
+        antExecutor.executeAntTask("asciidoctor-txt");
+
+        assertThat(new File(outputDirectory, "simple.xml")).exists();
+        assertThat(new File(outputDirectory, "_ignore.xml")).doesNotExist();
     }
 }
