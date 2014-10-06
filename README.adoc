@@ -3,6 +3,7 @@
 :asciidoc-url: http://asciidoc.org
 :asciidoctor-url: http://asciidoctor.org
 :asciidoctorj-url: https://github.com/asciidoctor/asciidoctorj
+:asciidoctor-maven-url: https://github.com/asciidoctor/asciidoctor-maven-plugin
 :issues: https://github.com/asciidoctor/asciidoctor-ant/issues
 :ant-url: http://ant.apache.org/
 :asciidoctor-ant-maven-repo: http://repo1.maven.org/maven2/org/asciidoctor/asciidoctor-ant/
@@ -54,7 +55,7 @@ You can download the uber jar of asciidoctor-ant in {asciidoctor-ant-maven-repo}
 
 === Configuration options
 
-There are several configuration options that the asciidoctor-ant Task uses. The options are similar to asciidoctor-maven-plugin :
+There are several configuration options that the asciidoctor-ant Task uses. The options are similar to {asciidoctor-maven-url}[asciidoctor-maven-plugin] :
 
 sourceDirectory:: the source directory of Asciidoc files (mandatory)
 sourceDocumentName:: an override to process a single source file; defaults to all files in `${sourceDirectory}`
@@ -70,6 +71,7 @@ compact:: defaults to `false`
 templateDir:: disabled by default, defaults to `null`
 templateEngine:: disabled by defaultÈ
 sourceHighlighter:: enables and sets the source highlighter (currently `coderay` or `highlightjs` are supported)
+extensions:: a list of non-standard extensions to render separated by comma. Currently ad, adoc, and asciidoc will be rendered by default
 embedAssets:: Embedd the CSS file, etc into the output, defaults to `false`
 
 ==== Builtin attributes
