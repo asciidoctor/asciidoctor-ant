@@ -2,4 +2,5 @@ target/
 *.iml
 .idea
 .DS_Store
+.java-version
 dependency-reduced-pom.xml
