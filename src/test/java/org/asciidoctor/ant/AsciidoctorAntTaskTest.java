@@ -92,6 +92,18 @@ public class AsciidoctorAntTaskTest {
         assertThat(new File(outputDirectory, "subfolder/another.html")).exists();
     }
 
+    @Test
+    public void should_manage_resources() throws IOException {
+        String outputDirectory = outputDirectory("asciidoctor-resources");
+        String document = "simple.adoc";
+        antExecutor.setProperties(initProperties(sourceDirectory(document), outputDirectory, "html5", document));
+
+        antExecutor.executeAntTask("asciidoctor-resources");
+
+        assertThat(new File(outputDirectory, "simple.html")).exists();
+        assertThat(new File(outputDirectory, "images/ftw.jpg")).exists();
+    }
+
     private String buildXml(String fileName) {
         URL resource = Thread.currentThread().getContextClassLoader().getResource(fileName);
         if (resource == null) {
