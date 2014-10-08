@@ -30,4 +30,12 @@
                      extensions="txt"/>
     </target>
 
+    <target name="asciidoctor-preserveDirectories" depends="asciidoctor-def">
+        <asciidoctor:convert baseDir="${baseDir}"
+                             sourceDirectory="${sourceDirectory}"
+                             outputDirectory="${outputDirectory}"
+                             backend="${backend}"
+                             preserveDirectories="true"/>
+    </target>
+
 </project>

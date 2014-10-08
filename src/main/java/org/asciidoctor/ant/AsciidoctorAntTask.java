@@ -21,6 +21,7 @@ import org.apache.tools.ant.Task;
 import org.asciidoctor.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -30,6 +31,7 @@ public class AsciidoctorAntTask extends Task {
 
     private String sourceDirectory;
     private String outputDirectory;
+    private boolean preserveDirectories = false;
 
     private String sourceDocumentName;
     private String backend = "docbook";
@@ -89,7 +91,18 @@ public class AsciidoctorAntTask extends Task {
 
     private void setDestinationPaths(OptionsBuilder optionsBuilder, final File sourceFile)  {
         optionsBuilder.baseDir(computeBaseDir(sourceFile));
-        optionsBuilder.toDir(new File(outputDirectory));
+        try {
+            if (preserveDirectories) {
+                String proposalPath = sourceFile.getParentFile().getCanonicalPath().substring(new File(sourceDirectory).getCanonicalPath().length());
+                File relativePath = new File(outputDirectory, proposalPath);
+                relativePath.mkdirs();
+                optionsBuilder.toDir(relativePath).destinationDir(relativePath);
+            } else {
+                optionsBuilder.toDir(new File(outputDirectory)).destinationDir(new File(outputDirectory));
+            }
+        } catch (IOException e) {
+            throw new BuildException("Unable to locate output directory", e);
+        }
     }
 
     private File computeBaseDir(File sourceFile) {
@@ -97,6 +110,7 @@ public class AsciidoctorAntTask extends Task {
         if (baseDir != null) {
             baseDirFile = new File(baseDir);
         } else {
+            // when preserveDirectories == false, parent and sourceDirectory are the same
             if (relativeBaseDir) {
                 baseDirFile = sourceFile.getParentFile();
             } else {
@@ -271,6 +285,11 @@ public class AsciidoctorAntTask extends Task {
     @SuppressWarnings("UnusedDeclaration")
     public void setExtensions(String extensions) {
         this.extensions = extensions;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public void setPreserveDirectories(boolean preserveDirectories) {
+        this.preserveDirectories = preserveDirectories;
     }
 
     @SuppressWarnings("UnusedDeclaration")
