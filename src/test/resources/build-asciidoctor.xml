@@ -38,4 +38,14 @@
                              preserveDirectories="true"/>
     </target>
 
+    <target name="asciidoctor-resources" depends="asciidoctor-def">
+        <asciidoctor:convert baseDir="${baseDir}"
+                             sourceDirectory="${sourceDirectory}"
+                             sourceDocumentName="${sourceDocumentName}"
+                             outputDirectory="${outputDirectory}"
+                             backend="${backend}">
+            <resource dir="${sourceDirectory}/images" includes="*.jpg"/>
+        </asciidoctor:convert>
+    </target>
+
 </project>

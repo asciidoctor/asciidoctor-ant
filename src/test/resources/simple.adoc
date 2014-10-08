@@ -2,3 +2,4 @@
 
 == With Ant
 
+image::ftw.jpg

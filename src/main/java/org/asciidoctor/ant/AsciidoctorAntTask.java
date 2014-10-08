@@ -15,12 +15,16 @@
  */
 package org.asciidoctor.ant;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
+import org.apache.tools.ant.types.FileSet;
 import org.asciidoctor.*;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +51,8 @@ public class AsciidoctorAntTask extends Task {
     private String baseDir;
     private boolean relativeBaseDir = false;
     private String extensions;
+
+    private List<FileSet> resources = new ArrayList<FileSet>();
     private List<Attribute> attributes = new ArrayList<Attribute>();
 
     @Override
@@ -73,6 +79,19 @@ public class AsciidoctorAntTask extends Task {
             File file = new File(sourceDirectory, sourceDocumentName);
             setDestinationPaths(optionsBuilder, file);
             asciidoctor.renderFile(file, optionsBuilder.get());
+        }
+
+        try {
+            for (FileSet resource : resources) {
+                File resourceDir = resource.getDir();
+                String destPath = resourceDir.getCanonicalPath().substring(new File(sourceDirectory).getCanonicalPath().length());
+                File destResourceDir = new File(outputDirectory, destPath);
+                destResourceDir.mkdirs();
+                String[] includedFiles = resource.getDirectoryScanner(getProject()).getIncludedFiles();
+                FileUtils.copyDirectory(resourceDir, destResourceDir, new ResourceFileFilter(includedFiles), false);
+            }
+        } catch (IOException e) {
+            throw new BuildException("Error copying resources", e);
         }
     }
 
@@ -293,6 +312,11 @@ public class AsciidoctorAntTask extends Task {
     }
 
     @SuppressWarnings("UnusedDeclaration")
+    public void addResource(FileSet fileSet) {
+        resources.add(fileSet);
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
     public Attribute createAttribute() {
         Attribute attribute = new Attribute();
         attributes.add(attribute);
@@ -318,6 +342,19 @@ public class AsciidoctorAntTask extends Task {
         @SuppressWarnings("UnusedDeclaration")
         public void setValue(String value) {
             this.value = value;
+        }
+    }
+
+    private static class ResourceFileFilter implements FileFilter {
+        private final List<String> includedFiles;
+
+        public ResourceFileFilter(String[] includedFiles) {
+            this.includedFiles = Arrays.asList(includedFiles);
+        }
+
+        @Override
+        public boolean accept(File pathname) {
+           return includedFiles.contains(pathname.getName());
         }
     }
 
