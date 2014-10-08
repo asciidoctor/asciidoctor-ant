@@ -1,4 +1,4 @@
-<project default="asciidoctor" xmlns:asciidoctor="antlib:org.asciidoctor.ant">
+<project xmlns:asciidoctor="antlib:org.asciidoctor.ant">
 
     <target name="asciidoctor-def">
         <taskdef uri="antlib:org.asciidoctor.ant" resource="org/asciidoctor/ant/antlib.xml"/>
@@ -10,6 +10,16 @@
                      sourceDocumentName="${sourceDocumentName}"
                      outputDirectory="${outputDirectory}"
                      backend="${backend}"/>
+    </target>
+
+    <target name="asciidoctor-title" depends="asciidoctor-def">
+        <asciidoctor:convert baseDir="${baseDir}"
+                             sourceDirectory="${sourceDirectory}"
+                             sourceDocumentName="${sourceDocumentName}"
+                             outputDirectory="${outputDirectory}"
+                             backend="${backend}">
+            <attribute key="title" value="Title from build.xml"/>
+        </asciidoctor:convert>
     </target>
 
     <target name="asciidoctor-txt" depends="asciidoctor-def">

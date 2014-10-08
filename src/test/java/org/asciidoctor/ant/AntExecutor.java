@@ -37,8 +37,10 @@ public class AntExecutor {
         properties.put(name, value);
     }
 
-    public void executeAntTask() {
-        executeAntTask(null);
+    public void setProperties(Map<String, String> properties) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            setProperty(entry.getKey(), entry.getValue());
+        }
     }
 
     public void executeAntTask(String target) {
