@@ -81,6 +81,17 @@ public class AsciidoctorAntTaskTest {
         assertThat(IOUtils.toString(new FileInputStream(out))).contains("<title>Title from build.xml</title>");
     }
 
+    @Test
+    public void should_manage_preserveDirectories() throws IOException {
+        String outputDirectory = outputDirectory("asciidoctor-preserveDirectories");
+        antExecutor.setProperties(initProperties(sourceDirectory("rootfolder/index.adoc"), outputDirectory, "html5"));
+
+        antExecutor.executeAntTask("asciidoctor-preserveDirectories");
+
+        assertThat(new File(outputDirectory, "index.html")).exists();
+        assertThat(new File(outputDirectory, "subfolder/another.html")).exists();
+    }
+
     private String buildXml(String fileName) {
         URL resource = Thread.currentThread().getContextClassLoader().getResource(fileName);
         if (resource == null) {

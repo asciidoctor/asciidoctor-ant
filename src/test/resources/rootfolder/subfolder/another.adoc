@@ -1,0 +1,3 @@
+= Another document
+
+== in a subfolder
