@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<antlib>
+   <typedef name="convert" classname="org.asciidoctor.ant.AsciidoctorAntTask"/>
+
+</antlib>

@@ -31,27 +31,22 @@ You can download the uber jar of asciidoctor-ant in {asciidoctor-ant-maven-repo}
 ...
 ----
 
-=== Declaration
+=== Usage
 
 [source,xml]
 ----
+<project xmlns:asciidoctor="antlib:org.asciidoctor.ant">
 ...
-    <target name="asciidoctor-def">
-        <taskdef name="asciidoctor" classname="org.asciidoctor.ant.AsciidoctorAntTask" classpath="lib/asciidoctor-ant.jar"/> <1>
+    <target name="doc">
+        <taskdef uri="antlib:org.asciidoctor.ant" resource="org/asciidoctor/ant/antlib.xml" classpath="lib/asciidoctor-ant.jar"/> <1>
+        <asciidoctor:convert sourceDirectory="src/asciidoc" outputDirectory="target"/>
     </target>
 ...
+</project>
 ----
 
 <1> "lib" is a directory containing the uber jar asciidoctor-ant.jar
 
-== Usage
-
-[source,xml]
-----
-...
-   <asciidoctor sourceDirectory="src/test/resources" outputDirectory="target"/>
-...
-----
 
 === Configuration options
 
@@ -83,7 +78,7 @@ title:: An override for the title of the document.
 [source,xml]
 ----
 ...
-   <asciidoctor sourceDirectory="src/test/resources" outputDirectory="target">
+    <asciidoctor:convert sourceDirectory="src/asciidoc" outputDirectory="target">
         <attribute key="title" value="Asciidoc Ant"/>
    </asciidoctor>
 ...

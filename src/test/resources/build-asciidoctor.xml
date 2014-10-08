@@ -1,11 +1,11 @@
-<project default="asciidoctor">
+<project default="asciidoctor" xmlns:asciidoctor="antlib:org.asciidoctor.ant">
 
     <target name="asciidoctor-def">
-        <taskdef name="asciidoctor" classname="org.asciidoctor.ant.AsciidoctorAntTask"/>
+        <taskdef uri="antlib:org.asciidoctor.ant" resource="org/asciidoctor/ant/antlib.xml"/>
     </target>
 
     <target name="asciidoctor" depends="asciidoctor-def">
-        <asciidoctor baseDir="${baseDir}"
+        <asciidoctor:convert baseDir="${baseDir}"
                      sourceDirectory="${sourceDirectory}"
                      sourceDocumentName="${sourceDocumentName}"
                      outputDirectory="${outputDirectory}"
@@ -13,12 +13,11 @@
     </target>
 
     <target name="asciidoctor-txt" depends="asciidoctor-def">
-        <asciidoctor baseDir="${baseDir}"
+        <asciidoctor:convert baseDir="${baseDir}"
                      sourceDirectory="${sourceDirectory}"
                      outputDirectory="${outputDirectory}"
                      backend="${backend}"
-                     extensions="txt">
-        </asciidoctor>
+                     extensions="txt"/>
     </target>
 
 </project>
