@@ -162,6 +162,7 @@
                                 <exclude>.git/**</exclude>
                                 <exclude>.git**</exclude>
                                 <exclude>**/*.xml</exclude>
+                                <exclude>**/*.properties</exclude>
                                 <exclude>**/*.adoc</exclude>
                                 <exclude>**/*.asciidoc</exclude>
                                 <exclude>**/src/test/resources/**</exclude>	
