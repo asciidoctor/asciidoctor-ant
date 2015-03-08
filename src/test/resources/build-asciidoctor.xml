@@ -48,4 +48,13 @@
         </asciidoctor:convert>
     </target>
 
+    <target name="asciidoctor-relativebasedir" depends="asciidoctor-def">
+        <asciidoctor:convert baseDir="${sourceDirectory}"
+                             relativebasedir="true"
+                             sourceDirectory="${sourceDirectory}"
+                             sourceDocumentName="${sourceDocumentName}"
+                             outputDirectory="${outputDirectory}"
+                             backend="${backend}"/>
+    </target>
+
 </project>

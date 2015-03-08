@@ -17,7 +17,6 @@ package org.asciidoctor.ant;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
@@ -98,7 +97,7 @@ public class AsciidoctorAntTask extends Task {
     private OptionsBuilder buildOptions() {
         OptionsBuilder optionsBuilder = OptionsBuilder.options();
         optionsBuilder.safe(SafeMode.SAFE).eruby(eruby);
-        optionsBuilder.backend(backend).docType(doctype).compact(compact).headerFooter(headerFooter);
+        optionsBuilder.backend(backend).docType(doctype).compact(compact).headerFooter(headerFooter).mkDirs(true);
         if (templateEngine != null) {
             optionsBuilder.templateEngine(templateEngine);
         }
@@ -117,7 +116,8 @@ public class AsciidoctorAntTask extends Task {
                 relativePath.mkdirs();
                 optionsBuilder.toDir(relativePath).destinationDir(relativePath);
             } else {
-                optionsBuilder.toDir(new File(outputDirectory)).destinationDir(new File(outputDirectory));
+                File destinationDir = new File(outputDirectory);
+                optionsBuilder.toDir(destinationDir).destinationDir(destinationDir);
             }
         } catch (IOException e) {
             throw new BuildException("Unable to locate output directory", e);

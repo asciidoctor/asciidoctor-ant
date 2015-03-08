@@ -104,6 +104,20 @@ public class AsciidoctorAntTaskTest {
         assertThat(new File(outputDirectory, "images/ftw.jpg")).exists();
     }
 
+    @Test
+    public void should_manage_relativebasedir() throws IOException {
+        String outputDirectory = outputDirectory("asciidoctor-relativebasedir");
+        String document = "including.ad";
+        antExecutor.setProperties(initProperties(sourceDirectory(document), outputDirectory, "html5", document));
+
+        antExecutor.executeAntTask("asciidoctor-relativebasedir");
+
+        // out is created in a new folder with basedir=sourceDir
+        File out = new File(sourceDirectory(document) + outputDirectory, "including.html");
+        assertThat(out).exists();
+        assertThat(IOUtils.toString(new FileInputStream(out))).contains("More text");
+    }
+
     private String buildXml(String fileName) {
         URL resource = Thread.currentThread().getContextClassLoader().getResource(fileName);
         if (resource == null) {
