@@ -64,6 +64,7 @@
         <maven.jacoco-maven-plugin.version>0.7.2.201409121644</maven.jacoco-maven-plugin.version>
 
         <asciidoctor.version>1.5.2</asciidoctor.version>
+        <asciidoctorj-pdf.version>1.5.0-alpha.7</asciidoctorj-pdf.version>
         <ant.version>1.8.0</ant.version>
 		<slf4j.version>1.7.5</slf4j.version>
         <commons-io.version>2.4</commons-io.version>
@@ -85,7 +86,12 @@
             <artifactId>asciidoctorj</artifactId>
             <version>${asciidoctor.version}</version>
         </dependency>
-		<dependency>
+        <dependency>
+            <groupId>org.asciidoctor</groupId>
+            <artifactId>asciidoctorj-pdf</artifactId>
+            <version>${asciidoctorj-pdf.version}</version>
+        </dependency>
+        <dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-nop</artifactId>
 			<version>${slf4j.version}</version>
