@@ -58,6 +58,18 @@ public class AsciidoctorAntTaskTest {
     }
 
     @Test
+    public void should_manage_backend_pdf() throws IOException {
+        String outputDirectory = outputDirectory("asciidoctor");
+        String document = "simple.adoc";
+        antExecutor.setProperties(initProperties(sourceDirectory(document), outputDirectory, "pdf", document));
+
+        antExecutor.executeAntTask("asciidoctor");
+
+        File out = new File(outputDirectory, "simple.pdf");
+        assertThat(out).exists();
+    }
+
+    @Test
     public void should_manage_extensions() throws IOException {
         String outputDirectory = outputDirectory("asciidoctor-ext");
         antExecutor.setProperties(initProperties(sourceDirectory("extensions/simple.txt"), outputDirectory, "docbook"));
