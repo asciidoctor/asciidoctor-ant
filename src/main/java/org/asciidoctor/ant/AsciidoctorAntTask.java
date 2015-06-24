@@ -25,6 +25,7 @@ import org.asciidoctor.*;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -60,9 +61,7 @@ public class AsciidoctorAntTask extends Task {
         checkMandatoryParameter("outputDirectory", outputDirectory);
 
         ensureOutputExists();
-
-        Asciidoctor asciidoctor = Asciidoctor.Factory.create(getClass().getClassLoader());
-
+        Asciidoctor asciidoctor = createAsciidoctor();
         AttributesBuilder attributesBuilder = buildAttributes();
         OptionsBuilder optionsBuilder = buildOptions();
         optionsBuilder.attributes(attributesBuilder.get());
@@ -91,6 +90,16 @@ public class AsciidoctorAntTask extends Task {
             }
         } catch (IOException e) {
             throw new BuildException("Error copying resources", e);
+        }
+    }
+
+    private Asciidoctor createAsciidoctor() {
+        ClassLoader oldTCCL = Thread.currentThread().getContextClassLoader();
+        try {
+            Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
+            return Asciidoctor.Factory.create();
+        } finally {
+            Thread.currentThread().setContextClassLoader(oldTCCL);
         }
     }
 
