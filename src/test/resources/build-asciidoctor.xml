@@ -48,4 +48,14 @@
         </asciidoctor:convert>
     </target>
 
+    <target name="asciidoctor-safemode" depends="asciidoctor-def">
+        <asciidoctor:convert baseDir="${baseDir}"
+                             sourceDirectory="${sourceDirectory}"
+                             sourceDocumentName="${sourceDocumentName}"
+                             outputDirectory="${outputDirectory}"
+                             backend="${backend}"
+                             safemode="Server">
+        </asciidoctor:convert>
+    </target>
+
 </project>

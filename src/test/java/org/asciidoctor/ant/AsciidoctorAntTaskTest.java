@@ -104,6 +104,17 @@ public class AsciidoctorAntTaskTest {
         assertThat(new File(outputDirectory, "images/ftw.jpg")).exists();
     }
 
+   @Test
+    public void should_accept_safemode() throws IOException {
+        String outputDirectory = outputDirectory("asciidoctor-safemode");
+        String document = "simple.adoc";
+        antExecutor.setProperties(initProperties(sourceDirectory(document), outputDirectory, "html5", document));
+
+        antExecutor.executeAntTask("asciidoctor-safemode");
+
+        assertThat(new File(outputDirectory, "simple.html")).exists();
+    }
+
     private String buildXml(String fileName) {
         URL resource = Thread.currentThread().getContextClassLoader().getResource(fileName);
         if (resource == null) {
