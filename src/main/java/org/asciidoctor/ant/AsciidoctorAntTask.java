@@ -51,6 +51,7 @@ public class AsciidoctorAntTask extends Task {
     private String baseDir;
     private boolean relativeBaseDir = false;
     private String extensions;
+    private SafeMode safe = SafeMode.SAFE;
 
     private List<FileSet> resources = new ArrayList<FileSet>();
     private List<Attribute> attributes = new ArrayList<Attribute>();
@@ -105,8 +106,7 @@ public class AsciidoctorAntTask extends Task {
 
     private OptionsBuilder buildOptions() {
         OptionsBuilder optionsBuilder = OptionsBuilder.options();
-        optionsBuilder.safe(SafeMode.SAFE).eruby(eruby);
-        optionsBuilder.backend(backend).docType(doctype).compact(compact).headerFooter(headerFooter).mkDirs(true);
+        optionsBuilder.safe(safe).eruby(eruby).backend(backend).docType(doctype).compact(compact).headerFooter(headerFooter).mkDirs(true);
         if (templateEngine != null) {
             optionsBuilder.templateEngine(templateEngine);
         }
@@ -365,6 +365,15 @@ public class AsciidoctorAntTask extends Task {
         public boolean accept(File pathname) {
            return includedFiles.contains(pathname.getName());
         }
+    }
+
+    /**
+     * Safemode can be UNSAFE, SAFE, SERVER, SECURE.
+     * 
+     * @param s New value of safe. Case is ignored. Not required-default is SAFE.
+     */
+    public void setSafemode(String s) {
+      safe = SafeMode.valueOf(s.toUpperCase());
     }
 
 }
