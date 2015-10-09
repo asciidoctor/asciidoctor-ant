@@ -115,21 +115,26 @@ With nested `<resource>`, the external resources used by your document can be co
 
 ==== AsciidoctorJ Extensions
 
-You can register http://asciidoctor.org/docs/asciidoctorj/#extension-api[AsciidoctorJ extensions] with nested extensions elements, composed of two attributes :
+You can register http://asciidoctor.org/docs/asciidoctorj/#extension-api[AsciidoctorJ extensions] with nested extensions elements :
 
-* `blockName` : the name of the block concerned by extension
-* `className` : the full qualified name of class implementing extension
-
-The supported extension types are :
-
-* `inlineMacro`
+[options="header",format="csv"]
+|===
+Type, Attributes
+`preProcessor`, `className`
+`treeProcessor`, `className`
+`postProcessor`, `className`
+`blockProcessor`, `blockName` and `className`
+`blockMacroProcessor`, `blockName` and `className`
+`inlineMacroProcessor`, `blockName` and `className`
+`includeProcessor`, `className`
+|===
 
 .Example
 [source,xml]
 ----
 ...
     <asciidoctor:convert sourceDirectory="src/asciidoc" outputDirectory="target" backend="html5">
-        <inlineMacro blockName="twitter" className="org.asciidoctor.ant.extensions.TwitterMacro"/>
+        <inlineMacroProcessor blockName="twitter" className="org.asciidoctor.ant.extensions.TwitterMacro"/>
    </asciidoctor>
 ...
 ----

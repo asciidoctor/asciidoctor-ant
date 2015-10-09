@@ -18,7 +18,7 @@
                              sourceDocumentName="${sourceDocumentName}"
                              outputDirectory="${outputDirectory}"
                              backend="${backend}">
-            <inlineMacro blockName="twitter" className="org.asciidoctor.ant.extensions.TwitterMacro"/>
+            <inlineMacroProcessor blockName="twitter" className="org.asciidoctor.ant.extensions.TwitterMacro"/>
         </asciidoctor:convert>
     </target>
 
