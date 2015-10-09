@@ -25,7 +25,6 @@ import org.asciidoctor.*;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -54,6 +53,7 @@ public class AsciidoctorAntTask extends Task {
 
     private List<FileSet> resources = new ArrayList<FileSet>();
     private List<Attribute> attributes = new ArrayList<Attribute>();
+    private List<Extension> inlineMacros = new ArrayList<Extension>();
 
     @Override
     public void execute() throws BuildException {
@@ -62,6 +62,7 @@ public class AsciidoctorAntTask extends Task {
 
         ensureOutputExists();
         Asciidoctor asciidoctor = createAsciidoctor();
+        registerExtension(asciidoctor);
         AttributesBuilder attributesBuilder = buildAttributes();
         OptionsBuilder optionsBuilder = buildOptions();
         optionsBuilder.attributes(attributesBuilder.get());
@@ -90,6 +91,12 @@ public class AsciidoctorAntTask extends Task {
             }
         } catch (IOException e) {
             throw new BuildException("Error copying resources", e);
+        }
+    }
+
+    private void registerExtension(Asciidoctor asciidoctor) {
+        for (Extension inlineMacro : inlineMacros) {
+            asciidoctor.javaExtensionRegistry().inlineMacro(inlineMacro.getBlockName(), inlineMacro.getClassName());
         }
     }
 
@@ -364,6 +371,36 @@ public class AsciidoctorAntTask extends Task {
         @Override
         public boolean accept(File pathname) {
            return includedFiles.contains(pathname.getName());
+        }
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public Extension createInlineMacro() {
+        Extension extension = new Extension();
+        inlineMacros.add(extension);
+        return extension;
+    }
+
+    public class Extension {
+        private String className;
+        private String blockName;
+
+        public String getClassName() {
+            return className;
+        }
+
+        public String getBlockName() {
+            return blockName;
+        }
+
+        @SuppressWarnings("UnusedDeclaration")
+        public void setClassName(String className) {
+            this.className = className;
+        }
+
+        @SuppressWarnings("UnusedDeclaration")
+        public void setBlockName(String blockName) {
+            this.blockName = blockName;
         }
     }
 

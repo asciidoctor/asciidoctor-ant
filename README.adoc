@@ -87,6 +87,7 @@ There are various attributes Asciidoctor recognizes. Below is a list of them and
 
 title:: An override for the title of the document.
 
+.Example
 [source,xml]
 ----
 ...
@@ -102,11 +103,33 @@ Many other attributes are possible. Until a canonical list is created for asciid
 
 With nested `<resource>`, the external resources used by your document can be copied to output directory.
 
+.Example
 [source,xml]
 ----
 ...
-    <asciidoctor:convert sourceDirectory="src/asciidoc" outputDirectory="target" backend="htm5">
+    <asciidoctor:convert sourceDirectory="src/asciidoc" outputDirectory="target" backend="html5">
         <resource dir="src/asciidoc/images" includes="*.png,*.jpg"/>
+   </asciidoctor>
+...
+----
+
+==== AsciidoctorJ Extensions
+
+You can register http://asciidoctor.org/docs/asciidoctorj/#extension-api[AsciidoctorJ extensions] with nested extensions elements, composed of two attributes :
+
+* `blockName` : the name of the block concerned by extension
+* `className` : the full qualified name of class implementing extension
+
+The supported extension types are :
+
+* `inlineMacro`
+
+.Example
+[source,xml]
+----
+...
+    <asciidoctor:convert sourceDirectory="src/asciidoc" outputDirectory="target" backend="html5">
+        <inlineMacro blockName="twitter" className="org.asciidoctor.ant.extensions.TwitterMacro"/>
    </asciidoctor>
 ...
 ----
