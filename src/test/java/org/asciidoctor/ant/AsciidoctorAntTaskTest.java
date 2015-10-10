@@ -70,6 +70,19 @@ public class AsciidoctorAntTaskTest {
     }
 
     @Test
+    public void should_register_asciidoctor_extension() throws IOException {
+        String outputDirectory = outputDirectory("asciidoctor-twitter");
+        String document = "twitter.adoc";
+        antExecutor.setProperties(initProperties(sourceDirectory(document), outputDirectory, "html5", document));
+
+        antExecutor.executeAntTask("asciidoctor-twitter");
+
+        File out = new File(outputDirectory, "twitter.html");
+        assertThat(out).exists();
+        assertThat(IOUtils.toString(new FileInputStream(out))).contains("<a href=\"http://www.twitter.com/@binout\">@binout</a>");
+    }
+
+    @Test
     public void should_manage_extensions() throws IOException {
         String outputDirectory = outputDirectory("asciidoctor-ext");
         antExecutor.setProperties(initProperties(sourceDirectory("extensions/simple.txt"), outputDirectory, "docbook"));

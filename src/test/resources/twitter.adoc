@@ -1,0 +1,5 @@
+= Simple Test
+
+== With Ant
+
+twitter:binout[]
