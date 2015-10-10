@@ -156,3 +156,5 @@ You can specify additional Ruby libraries not packaged in AsciidoctorJ.
     </asciidoctor>
 ...
 ----
+
+NOTE: you have to give a path to find gems with `gempPaths` attribute.
