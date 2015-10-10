@@ -25,7 +25,6 @@ import org.asciidoctor.*;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -56,6 +55,14 @@ public class AsciidoctorAntTask extends Task {
     private List<FileSet> resources = new ArrayList<FileSet>();
     private List<Attribute> attributes = new ArrayList<Attribute>();
 
+    private List<Extension> preProcessors = new ArrayList<Extension>();
+    private List<Extension> treeProcessors = new ArrayList<Extension>();
+    private List<Extension> postProcessors = new ArrayList<Extension>();
+    private List<Extension> blockProcessors = new ArrayList<Extension>();
+    private List<Extension> blockMacroProcessors = new ArrayList<Extension>();
+    private List<Extension> inlineMacroProcessors = new ArrayList<Extension>();
+    private List<Extension> includeProcessors = new ArrayList<Extension>();
+
     @Override
     public void execute() throws BuildException {
         checkMandatoryParameter("sourceDirectory", sourceDirectory);
@@ -63,6 +70,7 @@ public class AsciidoctorAntTask extends Task {
 
         ensureOutputExists();
         Asciidoctor asciidoctor = createAsciidoctor();
+        registerExtensions(asciidoctor);
         AttributesBuilder attributesBuilder = buildAttributes();
         OptionsBuilder optionsBuilder = buildOptions();
         optionsBuilder.attributes(attributesBuilder.get());
@@ -91,6 +99,30 @@ public class AsciidoctorAntTask extends Task {
             }
         } catch (IOException e) {
             throw new BuildException("Error copying resources", e);
+        }
+    }
+
+    private void registerExtensions(Asciidoctor asciidoctor) {
+        for (Extension preProcessor : preProcessors) {
+            asciidoctor.javaExtensionRegistry().preprocessor(preProcessor.getClassName());
+        }
+        for (Extension treeProcessor : treeProcessors) {
+            asciidoctor.javaExtensionRegistry().treeprocessor(treeProcessor.getClassName());
+        }
+        for (Extension postProcessor : postProcessors) {
+            asciidoctor.javaExtensionRegistry().postprocessor(postProcessor.getClassName());
+        }
+        for (Extension blockProcessor : blockProcessors) {
+            asciidoctor.javaExtensionRegistry().block(blockProcessor.getBlockName(), blockProcessor.getClassName());
+        }
+        for (Extension blockMacroProcessor : blockMacroProcessors) {
+            asciidoctor.javaExtensionRegistry().blockMacro(blockMacroProcessor.getBlockName(), blockMacroProcessor.getClassName());
+        }
+        for (Extension inlineMacroProcessor : inlineMacroProcessors) {
+            asciidoctor.javaExtensionRegistry().inlineMacro(inlineMacroProcessor.getBlockName(), inlineMacroProcessor.getClassName());
+        }
+        for (Extension includeProcessor : includeProcessors) {
+            asciidoctor.javaExtensionRegistry().includeProcessor(includeProcessor.getClassName());
         }
     }
 
@@ -374,6 +406,78 @@ public class AsciidoctorAntTask extends Task {
      */
     public void setSafemode(String s) {
       safe = SafeMode.valueOf(s.toUpperCase());
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public Extension createPreProcessor() {
+        Extension extension = new Extension();
+        preProcessors.add(extension);
+        return extension;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public Extension createTreeProcessor() {
+        Extension extension = new Extension();
+        treeProcessors.add(extension);
+        return extension;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public Extension createPostProcessor() {
+        Extension extension = new Extension();
+        postProcessors.add(extension);
+        return extension;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public Extension createBlockProcessor() {
+        Extension extension = new Extension();
+        blockProcessors.add(extension);
+        return extension;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public Extension createBlockMacroProcessor() {
+        Extension extension = new Extension();
+        blockMacroProcessors.add(extension);
+        return extension;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public Extension createInlineMacroProcessor() {
+        Extension extension = new Extension();
+        inlineMacroProcessors.add(extension);
+        return extension;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public Extension createIncludeProcessor() {
+        Extension extension = new Extension();
+        includeProcessors.add(extension);
+        return extension;
+    }
+
+    public class Extension {
+        private String className;
+        private String blockName;
+
+        public String getClassName() {
+            return className;
+        }
+
+        public String getBlockName() {
+            return blockName;
+        }
+
+        @SuppressWarnings("UnusedDeclaration")
+        public void setClassName(String className) {
+            this.className = className;
+        }
+
+        @SuppressWarnings("UnusedDeclaration")
+        public void setBlockName(String blockName) {
+            this.blockName = blockName;
+        }
     }
 
 }
