@@ -83,6 +83,19 @@ public class AsciidoctorAntTaskTest {
     }
 
     @Test
+    public void should_register_asciidoctor_diagram() throws IOException {
+        String outputDirectory = outputDirectory("asciidoctor-diagram");
+        String document = "diagram.adoc";
+        antExecutor.setProperties(initProperties(sourceDirectory(document), outputDirectory, "html5", document));
+
+        antExecutor.executeAntTask("asciidoctor-diagram");
+
+        File out = new File(outputDirectory, "diagram.html");
+        assertThat(out).exists();
+        assertThat(IOUtils.toString(new FileInputStream(out))).contains("alt=\"Diagram\" width=\"550\" height=\"182\"");
+    }
+
+    @Test
     public void should_manage_extensions() throws IOException {
         String outputDirectory = outputDirectory("asciidoctor-ext");
         antExecutor.setProperties(initProperties(sourceDirectory("extensions/simple.txt"), outputDirectory, "docbook"));
