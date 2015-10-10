@@ -22,6 +22,20 @@
         </asciidoctor:convert>
     </target>
 
+    <target name="asciidoctor-diagram" depends="asciidoctor-def">
+        <asciidoctor:convert baseDir="${baseDir}"
+                             sourceDirectory="${sourceDirectory}"
+                             sourceDocumentName="${sourceDocumentName}"
+                             outputDirectory="${outputDirectory}"
+                             backend="${backend}"
+                             imagesDir="${outputDirectory}/images"
+                             gemPaths="${sourceDirectory}/gems-provided">
+            <require name="tilt"/>
+            <require name="haml"/>
+            <require name="asciidoctor-diagram"/>
+        </asciidoctor:convert>
+    </target>
+
     <target name="asciidoctor-title" depends="asciidoctor-def">
         <asciidoctor:convert baseDir="${baseDir}"
                              sourceDirectory="${sourceDirectory}"

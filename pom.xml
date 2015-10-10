@@ -66,7 +66,8 @@
         <asciidoctor.version>1.5.2</asciidoctor.version>
         <asciidoctorj-pdf.version>1.5.0-alpha.7</asciidoctorj-pdf.version>
         <ant.version>1.8.0</ant.version>
-		<slf4j.version>1.7.5</slf4j.version>
+        <jruby.version>1.7.17</jruby.version>
+        <slf4j.version>1.7.5</slf4j.version>
         <commons-io.version>2.4</commons-io.version>
 
         <junit.version>4.11</junit.version>
@@ -79,6 +80,12 @@
             <groupId>org.apache.ant</groupId>
             <artifactId>ant</artifactId>
             <version>${ant.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jruby</groupId>
+            <artifactId>jruby-complete</artifactId>
+            <version>${jruby.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

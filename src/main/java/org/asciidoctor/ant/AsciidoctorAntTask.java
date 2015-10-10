@@ -21,6 +21,8 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
 import org.asciidoctor.*;
+import org.asciidoctor.internal.JRubyRuntimeContext;
+import org.asciidoctor.internal.RubyUtils;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -63,14 +65,20 @@ public class AsciidoctorAntTask extends Task {
     private List<Extension> inlineMacroProcessors = new ArrayList<Extension>();
     private List<Extension> includeProcessors = new ArrayList<Extension>();
 
+    private List<RubyLibrary> requires = new ArrayList<RubyLibrary>();
+    private String gemPaths;
+
     @Override
     public void execute() throws BuildException {
         checkMandatoryParameter("sourceDirectory", sourceDirectory);
         checkMandatoryParameter("outputDirectory", outputDirectory);
 
         ensureOutputExists();
-        Asciidoctor asciidoctor = createAsciidoctor();
+
+        Asciidoctor asciidoctor = createAsciidoctor(gemPaths);
+        registerAdditionalRubyLibraries();
         registerExtensions(asciidoctor);
+
         AttributesBuilder attributesBuilder = buildAttributes();
         OptionsBuilder optionsBuilder = buildOptions();
         optionsBuilder.attributes(attributesBuilder.get());
@@ -102,6 +110,13 @@ public class AsciidoctorAntTask extends Task {
         }
     }
 
+    private void registerAdditionalRubyLibraries() {
+        for (RubyLibrary require : requires) {
+            // FIXME AsciidoctorJ should provide a public API for requiring paths in the Ruby runtime
+            RubyUtils.requireLibrary(JRubyRuntimeContext.get(), require.getName());
+        }
+    }
+
     private void registerExtensions(Asciidoctor asciidoctor) {
         for (Extension preProcessor : preProcessors) {
             asciidoctor.javaExtensionRegistry().preprocessor(preProcessor.getClassName());
@@ -126,14 +141,37 @@ public class AsciidoctorAntTask extends Task {
         }
     }
 
-    private Asciidoctor createAsciidoctor() {
+    private Asciidoctor createAsciidoctor(String gemPath) {
         ClassLoader oldTCCL = Thread.currentThread().getContextClassLoader();
         try {
             Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
-            return Asciidoctor.Factory.create();
+            return getAsciidoctorInstance(gemPath);
         } finally {
             Thread.currentThread().setContextClassLoader(oldTCCL);
         }
+    }
+
+    private Asciidoctor getAsciidoctorInstance(String gemPath) {
+        Asciidoctor asciidoctor;
+        if (gemPath == null) {
+            asciidoctor = Asciidoctor.Factory.create();
+        }
+        else {
+            // Replace Windows path separator to avoid paths with mixed \ and /.
+            // This happens for instance when setting: <gemPath>${project.build.directory}/gems-provided</gemPath>
+            // because the project's path is converted to string.
+            String normalizedGemPath = (File.separatorChar == '\\') ? gemPath.replaceAll("\\\\", "/") : gemPath;
+            asciidoctor = Asciidoctor.Factory.create(normalizedGemPath);
+        }
+
+        String gemHome = JRubyRuntimeContext.get().evalScriptlet("ENV['GEM_HOME']").toString();
+        String gemHomeExpected = (gemPath == null || "".equals(gemPath)) ? "" : gemPath.split(java.io.File.pathSeparator)[0];
+
+        if (!"".equals(gemHome) && !gemHomeExpected.equals(gemHome)) {
+            log("Using inherited external environment to resolve gems (" + gemHome + "), i.e. build is platform dependent!");
+        }
+
+        return asciidoctor;
     }
 
     private OptionsBuilder buildOptions() {
@@ -480,4 +518,28 @@ public class AsciidoctorAntTask extends Task {
         }
     }
 
+    @SuppressWarnings("UnusedDeclaration")
+    public void setGemPaths(String gemPaths) {
+        this.gemPaths = gemPaths;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public RubyLibrary createRequire() {
+        RubyLibrary rubyLibrary = new RubyLibrary();
+        requires.add(rubyLibrary);
+        return rubyLibrary;
+    }
+
+    public class RubyLibrary {
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+
+        @SuppressWarnings("UnusedDeclaration")
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
 }
