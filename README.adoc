@@ -75,10 +75,11 @@ eruby:: defaults to erb, the version used in jruby
 headerFooter:: defaults to `true`
 compact:: defaults to `false`
 templateDir:: disabled by default, defaults to `null`
-templateEngine:: disabled by defaultÈ
+templateEngine:: disabled by default
 sourceHighlighter:: enables and sets the source highlighter (currently `coderay` or `highlightjs` are supported)
 extensions:: a list of non-standard extensions to render separated by comma. Currently ad, adoc, and asciidoc will be rendered by default
-embedAssets:: Embedd the CSS file, etc into the output, defaults to `false`
+embedAssets:: embed the CSS file, etc into the output, defaults to `false`
+safe:: Set SAFE mode. Possible value are `safe`, `secure`, `server`, `unsafe`. Not required - default is `safe`.
 
 ==== Builtin attributes
 

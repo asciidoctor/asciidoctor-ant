@@ -156,6 +156,17 @@ public class AsciidoctorAntTaskTest {
         assertThat(IOUtils.toString(new FileInputStream(out))).contains("More text");
     }
 
+  @Test
+    public void should_accept_safemode() throws IOException {
+        String outputDirectory = outputDirectory("asciidoctor-safemode");
+        String document = "simple.adoc";
+        antExecutor.setProperties(initProperties(sourceDirectory(document), outputDirectory, "html5", document));
+        
+        antExecutor.executeAntTask("asciidoctor-safemode");
+
+        assertThat(new File(outputDirectory, "simple.html")).exists();
+    }
+    
     private String buildXml(String fileName) {
         URL resource = Thread.currentThread().getContextClassLoader().getResource(fileName);
         if (resource == null) {
