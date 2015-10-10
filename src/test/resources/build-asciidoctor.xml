@@ -29,7 +29,7 @@
                              outputDirectory="${outputDirectory}"
                              backend="${backend}"
                              imagesDir="${outputDirectory}/images"
-                             gemPath="${sourceDirectory}/gems-provided">
+                             gemPaths="${sourceDirectory}/gems-provided">
             <require name="tilt"/>
             <require name="haml"/>
             <require name="asciidoctor-diagram"/>

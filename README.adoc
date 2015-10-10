@@ -80,6 +80,7 @@ sourceHighlighter:: enables and sets the source highlighter (currently `coderay`
 extensions:: a list of non-standard extensions to render separated by comma. Currently ad, adoc, and asciidoc will be rendered by default
 embedAssets:: embed the CSS file, etc into the output, defaults to `false`
 safe:: Set SAFE mode. Possible value are `safe`, `secure`, `server`, `unsafe`. Not required - default is `safe`.
+gemPaths:: enables to specify the location to one or more gem installation directories (same as GEM_PATH environment var), empty by default
 
 ==== Builtin attributes
 
@@ -137,5 +138,21 @@ Type, Attributes
     <asciidoctor:convert sourceDirectory="src/asciidoc" outputDirectory="target" backend="html5">
         <inlineMacroProcessor blockName="twitter" className="org.asciidoctor.ant.extensions.TwitterMacro"/>
    </asciidoctor>
+...
+----
+
+==== Additional Ruby libraries
+
+You can specify additional Ruby libraries not packaged in AsciidoctorJ.
+
+.Example
+[source,xml]
+----
+...
+    <asciidoctor:convert sourceDirectory="src/asciidoc" outputDirectory="target" backend="html5" gemPaths="gems-provided">
+      <require name="tilt"/>
+      <require name="haml"/>
+      <require name="asciidoctor-diagram"/>
+    </asciidoctor>
 ...
 ----

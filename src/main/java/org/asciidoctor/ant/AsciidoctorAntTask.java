@@ -66,7 +66,7 @@ public class AsciidoctorAntTask extends Task {
     private List<Extension> includeProcessors = new ArrayList<Extension>();
 
     private List<RubyLibrary> requires = new ArrayList<RubyLibrary>();
-    private String gemPath;
+    private String gemPaths;
 
     @Override
     public void execute() throws BuildException {
@@ -75,7 +75,7 @@ public class AsciidoctorAntTask extends Task {
 
         ensureOutputExists();
 
-        Asciidoctor asciidoctor = createAsciidoctor(gemPath);
+        Asciidoctor asciidoctor = createAsciidoctor(gemPaths);
         registerAdditionalRubyLibraries();
         registerExtensions(asciidoctor);
 
@@ -519,8 +519,8 @@ public class AsciidoctorAntTask extends Task {
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public void setGemPath(String gemPath) {
-        this.gemPath = gemPath;
+    public void setGemPaths(String gemPaths) {
+        this.gemPaths = gemPaths;
     }
 
     @SuppressWarnings("UnusedDeclaration")
