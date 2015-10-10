@@ -79,7 +79,7 @@ templateEngine:: disabled by default
 sourceHighlighter:: enables and sets the source highlighter (currently `coderay` or `highlightjs` are supported)
 extensions:: a list of non-standard extensions to render separated by comma. Currently ad, adoc, and asciidoc will be rendered by default
 embedAssets:: embed the CSS file, etc into the output, defaults to `false`
-safe:: Set SAFE mode. Possible value are `safe`, `secure`, `server`, `unsafe`. Not required - default is `safe`.
+safe:: set SAFE mode. Possible value are `safe`, `secure`, `server`, `unsafe`. Not required - default is `safe`.
 gemPaths:: enables to specify the location to one or more gem installation directories (same as GEM_PATH environment var), empty by default
 
 ==== Builtin attributes
@@ -95,7 +95,7 @@ title:: An override for the title of the document.
 ...
     <asciidoctor:convert sourceDirectory="src/asciidoc" outputDirectory="target">
         <attribute key="title" value="Asciidoc Ant"/>
-   </asciidoctor>
+    </asciidoctor:convert>
 ...
 ----
 
@@ -111,7 +111,7 @@ With nested `<resource>`, the external resources used by your document can be co
 ...
     <asciidoctor:convert sourceDirectory="src/asciidoc" outputDirectory="target" backend="html5">
         <resource dir="src/asciidoc/images" includes="*.png,*.jpg"/>
-   </asciidoctor>
+    </asciidoctor:convert>
 ...
 ----
 
@@ -137,7 +137,7 @@ Type, Attributes
 ...
     <asciidoctor:convert sourceDirectory="src/asciidoc" outputDirectory="target" backend="html5">
         <inlineMacroProcessor blockName="twitter" className="org.asciidoctor.ant.extensions.TwitterMacro"/>
-   </asciidoctor>
+    </asciidoctor:convert>
 ...
 ----
 
@@ -153,7 +153,7 @@ You can specify additional Ruby libraries not packaged in AsciidoctorJ.
       <require name="tilt"/>
       <require name="haml"/>
       <require name="asciidoctor-diagram"/>
-    </asciidoctor>
+    </asciidoctor:convert>
 ...
 ----
 
