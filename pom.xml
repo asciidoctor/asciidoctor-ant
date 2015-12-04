@@ -31,7 +31,7 @@
             <id>binout</id>
             <name>Benoit Prioux</name>
             <email>benoit.prioux@gmail.com</email>
-            <url>http://javaonemorething.wordpress.com</url>
+            <url>http://binout.github.io/javaonemorething</url>
             <timezone>+1</timezone>
             <roles>
                 <role>Java Developer</role>
@@ -39,10 +39,6 @@
         </developer>
     </developers>
 
-    <ciManagement>
-        <system>buildhive</system>
-        <url>https://buildhive.cloudbees.com/job/Asciidoctor/job/asciidoctor-ant/</url>
-    </ciManagement>
     <issueManagement>
         <system>github</system>
         <url>https://github.com/asciidoctor/asciidoctor-ant</url>
