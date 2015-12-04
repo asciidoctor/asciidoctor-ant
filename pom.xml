@@ -10,7 +10,7 @@
 
     <groupId>org.asciidoctor</groupId>
     <artifactId>asciidoctor-ant</artifactId>
-    <version>1.5.2</version>
+    <version>1.5.3-SNAPSHOT</version>
 
     <packaging>jar</packaging>
     <name>asciidoctor-ant</name>
@@ -31,7 +31,7 @@
             <id>binout</id>
             <name>Benoit Prioux</name>
             <email>benoit.prioux@gmail.com</email>
-            <url>http://javaonemorething.wordpress.com</url>
+            <url>http://binout.github.io/javaonemorething</url>
             <timezone>+1</timezone>
             <roles>
                 <role>Java Developer</role>
@@ -39,10 +39,6 @@
         </developer>
     </developers>
 
-    <ciManagement>
-        <system>buildhive</system>
-        <url>https://buildhive.cloudbees.com/job/Asciidoctor/job/asciidoctor-ant/</url>
-    </ciManagement>
     <issueManagement>
         <system>github</system>
         <url>https://github.com/asciidoctor/asciidoctor-ant</url>
@@ -63,10 +59,10 @@
         <maven.apache-rat-plugin.version>0.7</maven.apache-rat-plugin.version>
         <maven.jacoco-maven-plugin.version>0.7.2.201409121644</maven.jacoco-maven-plugin.version>
 
-        <asciidoctor.version>1.5.2</asciidoctor.version>
-        <asciidoctorj-pdf.version>1.5.0-alpha.7</asciidoctorj-pdf.version>
+        <asciidoctor.version>1.5.3.2</asciidoctor.version>
+        <asciidoctorj-pdf.version>1.5.0-alpha.10.1</asciidoctorj-pdf.version>
         <ant.version>1.8.0</ant.version>
-        <jruby.version>1.7.17</jruby.version>
+        <jruby.version>1.7.21</jruby.version>
         <slf4j.version>1.7.5</slf4j.version>
         <commons-io.version>2.4</commons-io.version>
 
