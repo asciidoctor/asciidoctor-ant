@@ -10,7 +10,7 @@
 
     <groupId>org.asciidoctor</groupId>
     <artifactId>asciidoctor-ant</artifactId>
-    <version>1.5.2-SNAPSHOT</version>
+    <version>1.5.2</version>
 
     <packaging>jar</packaging>
     <name>asciidoctor-ant</name>
