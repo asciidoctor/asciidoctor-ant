@@ -79,7 +79,7 @@ templateEngine:: disabled by default
 sourceHighlighter:: enables and sets the source highlighter (currently `coderay` or `highlightjs` are supported)
 extensions:: a list of non-standard extensions to render separated by comma. Currently ad, adoc, and asciidoc will be rendered by default
 embedAssets:: embed the CSS file, etc into the output, defaults to `false`
-safe:: set SAFE mode. Possible value are `safe`, `secure`, `server`, `unsafe`. Not required - default is `safe`.
+safemode:: set SAFE mode. Possible value are `safe`, `secure`, `server`, `unsafe`. Not required - default is `safe`.
 gemPaths:: enables to specify the location to one or more gem installation directories (same as GEM_PATH environment var), empty by default
 
 ==== Builtin attributes
