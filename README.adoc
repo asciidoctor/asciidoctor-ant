@@ -99,7 +99,8 @@ title:: An override for the title of the document.
 ...
 ----
 
-Many other attributes are possible. Until a canonical list is created for asciidoctor, you may find http://asciidoc.org/userguide.html#X88[this list] to be helpful.
+Many other attributes are possible. 
+See {asciidoctor-url}/docs/user-manual/#builtin-attributes for the full list.
 
 ==== Resources (images, css, ...)
 
