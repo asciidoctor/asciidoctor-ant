@@ -59,10 +59,10 @@
         <maven.apache-rat-plugin.version>0.7</maven.apache-rat-plugin.version>
         <maven.jacoco-maven-plugin.version>0.7.2.201409121644</maven.jacoco-maven-plugin.version>
 
-        <asciidoctor.version>1.5.4</asciidoctor.version>
+        <asciidoctor.version>1.5.5</asciidoctor.version>
         <asciidoctorj-pdf.version>1.5.0-alpha.11</asciidoctorj-pdf.version>
         <ant.version>1.8.0</ant.version>
-        <jruby.version>1.7.21</jruby.version>
+        <jruby.version>1.7.26</jruby.version>
         <slf4j.version>1.7.5</slf4j.version>
         <commons-io.version>2.4</commons-io.version>
 
@@ -94,10 +94,10 @@
             <version>${asciidoctorj-pdf.version}</version>
         </dependency>
         <dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-nop</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
