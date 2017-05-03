@@ -31,6 +31,8 @@ You can download the uber jar of asciidoctor-ant in {asciidoctor-ant-maven-repo}
 ...
 ----
 
+NOTE: you can also download a _core_ artifact without the asciidoctorj dependencies (available since 1.5.4).
+
 === Usage
 
 [source,xml]
