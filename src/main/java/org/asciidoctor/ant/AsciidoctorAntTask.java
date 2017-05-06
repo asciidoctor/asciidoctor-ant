@@ -22,7 +22,6 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
 import org.asciidoctor.*;
 import org.asciidoctor.internal.JRubyRuntimeContext;
-import org.asciidoctor.internal.RubyUtils;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -76,7 +75,7 @@ public class AsciidoctorAntTask extends Task {
         ensureOutputExists();
 
         Asciidoctor asciidoctor = createAsciidoctor(gemPaths);
-        registerAdditionalRubyLibraries();
+        registerAdditionalRubyLibraries(asciidoctor);
         registerExtensions(asciidoctor);
 
         AttributesBuilder attributesBuilder = buildAttributes();
@@ -110,10 +109,9 @@ public class AsciidoctorAntTask extends Task {
         }
     }
 
-    private void registerAdditionalRubyLibraries() {
+    private void registerAdditionalRubyLibraries(Asciidoctor asciidoctor) {
         for (RubyLibrary require : requires) {
-            // FIXME AsciidoctorJ should provide a public API for requiring paths in the Ruby runtime
-            RubyUtils.requireLibrary(JRubyRuntimeContext.get(), require.getName());
+            asciidoctor.requireLibrary(require.getName());
         }
     }
 
@@ -164,7 +162,7 @@ public class AsciidoctorAntTask extends Task {
             asciidoctor = Asciidoctor.Factory.create(normalizedGemPath);
         }
 
-        String gemHome = JRubyRuntimeContext.get().evalScriptlet("ENV['GEM_HOME']").toString();
+        String gemHome = JRubyRuntimeContext.get(asciidoctor).evalScriptlet("ENV['GEM_HOME']").toString();
         String gemHomeExpected = (gemPath == null || "".equals(gemPath)) ? "" : gemPath.split(java.io.File.pathSeparator)[0];
 
         if (!"".equals(gemHome) && !gemHomeExpected.equals(gemHome)) {
@@ -439,7 +437,7 @@ public class AsciidoctorAntTask extends Task {
 
     /**
      * Safemode can be UNSAFE, SAFE, SERVER, SECURE.
-     * 
+     *
      * @param s New value of safe. Case is ignored. Not required-default is SAFE.
      */
     public void setSafemode(String s) {

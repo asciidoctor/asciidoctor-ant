@@ -10,7 +10,7 @@
 
     <groupId>org.asciidoctor</groupId>
     <artifactId>asciidoctor-ant</artifactId>
-    <version>1.5.5-SNAPSHOT</version>
+    <version>1.6.0-SNAPSHOT</version>
 
     <packaging>jar</packaging>
     <name>asciidoctor-ant</name>
@@ -59,10 +59,10 @@
         <maven.apache-rat-plugin.version>0.7</maven.apache-rat-plugin.version>
         <maven.jacoco-maven-plugin.version>0.7.2.201409121644</maven.jacoco-maven-plugin.version>
 
-        <asciidoctorj.version>1.5.5</asciidoctorj.version>
-        <asciidoctorj-pdf.version>1.5.0-alpha.11</asciidoctorj-pdf.version>
+        <asciidoctorj.version>1.6.0-alpha.3</asciidoctorj.version>
+        <asciidoctorj-pdf.version>1.5.0-alpha.15</asciidoctorj-pdf.version>
         <ant.version>1.8.0</ant.version>
-        <jruby.version>1.7.26</jruby.version>
+        <jruby.version>9.1.8.0</jruby.version>
         <commons-io.version>2.4</commons-io.version>
 
         <junit.version>4.11</junit.version>
@@ -88,6 +88,12 @@
             <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctorj</artifactId>
             <version>${asciidoctorj.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jruby</groupId>
+                    <artifactId>jruby</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.asciidoctor</groupId>
