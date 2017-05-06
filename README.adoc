@@ -10,7 +10,7 @@
 
 image:https://travis-ci.org/asciidoctor/asciidoctor-ant.svg?branch=master["Build Status", link="https://travis-ci.org/asciidoctor/asciidoctor-ant"]
 
-The asciidoctor-ant is the unofficial means of using {asciidoctor-url}[Asciidoctor] to render all your {asciidoc-url}[AsciiDoc] documentation using {ant-url}[Apache Ant].
+The asciidoctor-ant is the official means of using {asciidoctor-url}[Asciidoctor] to render all your {asciidoc-url}[AsciiDoc] documentation using {ant-url}[Apache Ant].
 
 == Installation
 
