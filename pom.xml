@@ -63,7 +63,6 @@
         <asciidoctorj-pdf.version>1.5.0-alpha.11</asciidoctorj-pdf.version>
         <ant.version>1.8.0</ant.version>
         <jruby.version>1.7.25</jruby.version>
-        <slf4j.version>1.7.5</slf4j.version>
         <commons-io.version>2.4</commons-io.version>
 
         <junit.version>4.11</junit.version>
@@ -72,12 +71,14 @@
     </properties>
 
     <dependencies>
+        <!-- provided dependencies -->
         <dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant</artifactId>
             <version>${ant.version}</version>
             <scope>provided</scope>
         </dependency>
+        <!-- embedded libraries -->
         <dependency>
             <groupId>org.jruby</groupId>
             <artifactId>jruby-complete</artifactId>
@@ -93,17 +94,13 @@
             <artifactId>asciidoctorj-pdf</artifactId>
             <version>${asciidoctorj-pdf.version}</version>
         </dependency>
-        <dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-nop</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
+        <!-- libraries for core artifact -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
         </dependency>
-
+        <!-- test dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
