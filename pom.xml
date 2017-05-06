@@ -165,22 +165,6 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <artifactSet>
-                                <includes>
-                                    <include>commons-io:*</include>
-                                </includes>
-                            </artifactSet>
-                            <shadedArtifactAttached>true</shadedArtifactAttached>
-                            <shadedClassifierName>core</shadedClassifierName>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>all</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
                             <shadedArtifactAttached>false</shadedArtifactAttached>
                         </configuration>
                     </execution>
