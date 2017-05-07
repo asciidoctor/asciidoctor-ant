@@ -10,7 +10,7 @@
 
 image:https://travis-ci.org/asciidoctor/asciidoctor-ant.svg?branch=master["Build Status", link="https://travis-ci.org/asciidoctor/asciidoctor-ant"]
 
-The asciidoctor-ant is the unofficial means of using {asciidoctor-url}[Asciidoctor] to render all your {asciidoc-url}[AsciiDoc] documentation using {ant-url}[Apache Ant].
+The asciidoctor-ant is the official means of using {asciidoctor-url}[Asciidoctor] to render all your {asciidoc-url}[AsciiDoc] documentation using {ant-url}[Apache Ant].
 
 == Installation
 
@@ -30,6 +30,8 @@ You can download the uber jar of asciidoctor-ant in {asciidoctor-ant-maven-repo}
            dest="lib/asciidoctor-ant.jar" usetimestamp="true"/>
 ...
 ----
+
+NOTE: you can also download a _core_ artifact without the asciidoctorj dependencies (available since 1.5.4).
 
 === Usage
 

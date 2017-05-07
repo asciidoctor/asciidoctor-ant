@@ -10,7 +10,7 @@
 
     <groupId>org.asciidoctor</groupId>
     <artifactId>asciidoctor-ant</artifactId>
-    <version>1.5.4-SNAPSHOT</version>
+    <version>1.5.4</version>
 
     <packaging>jar</packaging>
     <name>asciidoctor-ant</name>
@@ -59,11 +59,10 @@
         <maven.apache-rat-plugin.version>0.7</maven.apache-rat-plugin.version>
         <maven.jacoco-maven-plugin.version>0.7.2.201409121644</maven.jacoco-maven-plugin.version>
 
-        <asciidoctor.version>1.5.5</asciidoctor.version>
+        <asciidoctorj.version>1.5.5</asciidoctorj.version>
         <asciidoctorj-pdf.version>1.5.0-alpha.11</asciidoctorj-pdf.version>
         <ant.version>1.8.0</ant.version>
         <jruby.version>1.7.26</jruby.version>
-        <slf4j.version>1.7.5</slf4j.version>
         <commons-io.version>2.4</commons-io.version>
 
         <junit.version>4.11</junit.version>
@@ -72,12 +71,14 @@
     </properties>
 
     <dependencies>
+        <!-- provided dependencies -->
         <dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant</artifactId>
             <version>${ant.version}</version>
             <scope>provided</scope>
         </dependency>
+        <!-- embedded libraries -->
         <dependency>
             <groupId>org.jruby</groupId>
             <artifactId>jruby-complete</artifactId>
@@ -86,24 +87,20 @@
         <dependency>
             <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctorj</artifactId>
-            <version>${asciidoctor.version}</version>
+            <version>${asciidoctorj.version}</version>
         </dependency>
         <dependency>
             <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctorj-pdf</artifactId>
             <version>${asciidoctorj-pdf.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-nop</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
+        <!-- libraries for core artifact -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
         </dependency>
-
+        <!-- test dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -146,10 +143,30 @@
                 <version>${maven-shade-plugin.version}</version>
                 <executions>
                     <execution>
+                        <id>core</id>
                         <phase>package</phase>
                         <goals>
                             <goal>shade</goal>
                         </goals>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>commons-io:*</include>
+                                </includes>
+                            </artifactSet>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <shadedClassifierName>core</shadedClassifierName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>all</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <shadedArtifactAttached>false</shadedArtifactAttached>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
