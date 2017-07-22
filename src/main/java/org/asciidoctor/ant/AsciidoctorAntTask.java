@@ -33,8 +33,8 @@ import java.util.List;
 
 public class AsciidoctorAntTask extends Task {
 
-    private String sourceDirectory;
-    private String outputDirectory;
+    private File sourceDirectory;
+    private File outputDirectory;
     private boolean preserveDirectories = false;
 
     private String sourceDocumentName;
@@ -72,7 +72,7 @@ public class AsciidoctorAntTask extends Task {
         checkMandatoryParameter("sourceDirectory", sourceDirectory);
         checkMandatoryParameter("outputDirectory", outputDirectory);
 
-        ensureOutputExists();
+        ensureOutputExists(outputDirectory);
 
         Asciidoctor asciidoctor = createAsciidoctor(gemPaths);
         registerAdditionalRubyLibraries(asciidoctor);
@@ -98,7 +98,7 @@ public class AsciidoctorAntTask extends Task {
         try {
             for (FileSet resource : resources) {
                 File resourceDir = resource.getDir();
-                String destPath = resourceDir.getCanonicalPath().substring(new File(sourceDirectory).getCanonicalPath().length());
+                String destPath = resourceDir.getCanonicalPath().substring(sourceDirectory.getCanonicalPath().length());
                 File destResourceDir = new File(outputDirectory, destPath);
                 destResourceDir.mkdirs();
                 String[] includedFiles = resource.getDirectoryScanner(getProject()).getIncludedFiles();
@@ -188,12 +188,12 @@ public class AsciidoctorAntTask extends Task {
         optionsBuilder.baseDir(computeBaseDir(sourceFile));
         try {
             if (preserveDirectories) {
-                String proposalPath = sourceFile.getParentFile().getCanonicalPath().substring(new File(sourceDirectory).getCanonicalPath().length());
+                String proposalPath = sourceFile.getParentFile().getCanonicalPath().substring(sourceDirectory.getCanonicalPath().length());
                 File relativePath = new File(outputDirectory, proposalPath);
                 relativePath.mkdirs();
                 optionsBuilder.toDir(relativePath).destinationDir(relativePath);
             } else {
-                File destinationDir = new File(outputDirectory);
+                File destinationDir = outputDirectory;
                 optionsBuilder.toDir(destinationDir).destinationDir(destinationDir);
             }
         } catch (IOException e) {
@@ -245,8 +245,7 @@ public class AsciidoctorAntTask extends Task {
         }
     }
 
-    private void ensureOutputExists() {
-        File outputFile = new File(outputDirectory);
+    private void ensureOutputExists(File outputFile) {
         if (!outputFile.exists()) {
             if (!outputFile.mkdirs()) {
                 log("Can't create " + outputFile.getPath(), Project.MSG_ERR);
@@ -256,7 +255,7 @@ public class AsciidoctorAntTask extends Task {
 
     private List<File> scanSourceFiles() {
         final List<File> asciidoctorFiles;
-        String absoluteSourceDirectory = sourceDirectory;
+        String absoluteSourceDirectory = sourceDirectory.getAbsolutePath();
         if (extensions == null || extensions.isEmpty()) {
             final DirectoryWalker directoryWalker = new AsciiDocDirectoryWalker(absoluteSourceDirectory);
             asciidoctorFiles = directoryWalker.scan();
@@ -304,12 +303,12 @@ public class AsciidoctorAntTask extends Task {
     // Setters for Ant Task
 
     @SuppressWarnings("UnusedDeclaration")
-    public void setSourceDirectory(String sourceDirectory) {
+    public void setSourceDirectory(File sourceDirectory) {
         this.sourceDirectory = sourceDirectory;
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public void setOutputDirectory(String outputDirectory) {
+    public void setOutputDirectory(File outputDirectory) {
         this.outputDirectory = outputDirectory;
     }
 
