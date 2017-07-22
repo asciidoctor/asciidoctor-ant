@@ -10,7 +10,7 @@
 
     <groupId>org.asciidoctor</groupId>
     <artifactId>asciidoctor-ant</artifactId>
-    <version>1.5.4-SNAPSHOT</version>
+    <version>1.5.5-SNAPSHOT</version>
 
     <packaging>jar</packaging>
     <name>asciidoctor-ant</name>
@@ -59,10 +59,10 @@
         <maven.apache-rat-plugin.version>0.7</maven.apache-rat-plugin.version>
         <maven.jacoco-maven-plugin.version>0.7.2.201409121644</maven.jacoco-maven-plugin.version>
 
-        <asciidoctorj.version>1.5.4.1</asciidoctorj.version>
+        <asciidoctorj.version>1.5.5</asciidoctorj.version>
         <asciidoctorj-pdf.version>1.5.0-alpha.11</asciidoctorj-pdf.version>
         <ant.version>1.8.0</ant.version>
-        <jruby.version>1.7.25</jruby.version>
+        <jruby.version>1.7.26</jruby.version>
         <commons-io.version>2.4</commons-io.version>
 
         <junit.version>4.11</junit.version>
