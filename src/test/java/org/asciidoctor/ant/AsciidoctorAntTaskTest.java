@@ -83,7 +83,7 @@ public class AsciidoctorAntTaskTest {
     }
 
     @Test
-    public void should_register_asciidoctor_diagram() throws IOException {
+    public void should_use_asciidoctor_diagram() throws IOException {
         String outputDirectory = outputDirectory("asciidoctor-diagram");
         String document = "diagram.adoc";
         antExecutor.setProperties(initProperties(sourceDirectory(document), outputDirectory, "html5", document));
@@ -92,7 +92,20 @@ public class AsciidoctorAntTaskTest {
 
         File out = new File(outputDirectory, "diagram.html");
         assertThat(out).exists();
-        assertThat(IOUtils.toString(new FileInputStream(out))).contains("alt=\"Diagram\" width=\"550\" height=\"182\"");
+        assertThat(IOUtils.toString(new FileInputStream(out))).contains("width=\"550\" height=\"182\"");
+    }
+
+    @Test
+    public void should_manage_template_dir_and_require() throws IOException {
+        String outputDirectory = outputDirectory("asciidoctor-slide");
+        String document = "slide.adoc";
+        antExecutor.setProperties(initProperties(sourceDirectory(document), outputDirectory, "deckjs", document));
+
+        antExecutor.executeAntTask("asciidoctor-slide");
+
+        File out = new File(outputDirectory, "slide.html");
+        assertThat(out).exists();
+        assertThat(IOUtils.toString(new FileInputStream(out))).contains("deck.js");
     }
 
     @Test

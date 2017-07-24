@@ -111,11 +111,17 @@ public class AsciidoctorAntTask extends Task {
 
     private void registerAdditionalRubyLibraries(Asciidoctor asciidoctor) {
         for (RubyLibrary require : requires) {
-            asciidoctor.requireLibrary(require.getName());
+            asciidoctor.rubyExtensionRegistry().requireLibrary(require.getName());
         }
     }
 
     private void registerExtensions(Asciidoctor asciidoctor) {
+        try {
+            asciidoctor.rubyExtensionRegistry().requireLibrary("asciidoctor-diagram");
+        } catch (RuntimeException e) {
+            log("asciidoctor-diagram is not available", Project.MSG_WARN);
+        }
+
         for (Extension preProcessor : preProcessors) {
             asciidoctor.javaExtensionRegistry().preprocessor(preProcessor.getClassName());
         }
