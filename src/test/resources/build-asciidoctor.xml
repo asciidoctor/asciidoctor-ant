@@ -27,12 +27,20 @@
                              sourceDirectory="${sourceDirectory}"
                              sourceDocumentName="${sourceDocumentName}"
                              outputDirectory="${outputDirectory}"
+                             backend="${backend}"/>
+    </target>
+
+    <target name="asciidoctor-slide" depends="asciidoctor-def">
+        <asciidoctor:convert baseDir="${baseDir}"
+                             sourceDirectory="${sourceDirectory}"
+                             sourceDocumentName="${sourceDocumentName}"
+                             outputDirectory="${outputDirectory}"
                              backend="${backend}"
                              imagesDir="${outputDirectory}/images"
+                             templateDir="${sourceDirectory}/asciidoctor-backends/haml"
                              gemPaths="${sourceDirectory}/gems-provided">
             <require name="tilt"/>
             <require name="haml"/>
-            <require name="asciidoctor-diagram"/>
         </asciidoctor:convert>
     </target>
 
