@@ -1,10 +1,10 @@
-language: java
+dist: trusty
 sudo: false
+language: java
 jdk:
   - oraclejdk8
-  - oraclejdk7
+  - openjdk8
   - openjdk7
-  - openjdk6
 install:
   - mvn package -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script:
