@@ -59,8 +59,8 @@
         <maven.apache-rat-plugin.version>0.7</maven.apache-rat-plugin.version>
         <maven.jacoco-maven-plugin.version>0.7.2.201409121644</maven.jacoco-maven-plugin.version>
 
-        <asciidoctorj.version>1.6.0-alpha.3</asciidoctorj.version>
-        <asciidoctorj-pdf.version>1.5.0-alpha.15</asciidoctorj-pdf.version>
+        <asciidoctorj.version>1.6.0-alpha.5</asciidoctorj.version>
+        <asciidoctorj-pdf.version>1.5.0-alpha.16</asciidoctorj-pdf.version>
         <ant.version>1.8.0</ant.version>
         <jruby.version>9.1.8.0</jruby.version>
         <commons-io.version>2.4</commons-io.version>
