@@ -81,12 +81,12 @@
     </target>
 
     <target name="asciidoctor-relativebasedir" depends="asciidoctor-def">
-        <asciidoctor:convert baseDir="${sourceDirectory}"
-                             relativebasedir="true"
+        <asciidoctor:convert relativebasedir="true"
                              sourceDirectory="${sourceDirectory}"
                              sourceDocumentName="${sourceDocumentName}"
                              outputDirectory="${outputDirectory}"
-                             backend="${backend}"/>
+                             backend="${backend}"
+                             safemode="Unsafe"/>
     </target>
 
     <target name="asciidoctor-safemode" depends="asciidoctor-def">

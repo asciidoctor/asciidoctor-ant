@@ -29,7 +29,7 @@ public class TwitterMacro extends InlineMacroProcessor {
     }
 
     @Override
-    protected Object process(AbstractBlock parent, String twitterHandle, Map<String, Object> attributes) {
+    public Object process(AbstractBlock parent, String twitterHandle, Map<String, Object> attributes) {
         // Define options for an 'anchor' element.
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("type",":link");

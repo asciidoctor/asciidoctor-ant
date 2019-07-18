@@ -164,7 +164,7 @@ public class AsciidoctorAntTaskTest {
         antExecutor.executeAntTask("asciidoctor-relativebasedir");
 
         // out is created in a new folder with basedir=sourceDir
-        File out = new File(sourceDirectory(document) + outputDirectory, "including.html");
+        File out = new File(outputDirectory, "including.html");
         assertThat(out).exists();
         assertThat(IOUtils.toString(new FileInputStream(out))).contains("More text");
     }
