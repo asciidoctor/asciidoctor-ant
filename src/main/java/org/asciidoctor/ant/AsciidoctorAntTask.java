@@ -22,7 +22,6 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
 import org.asciidoctor.*;
 import org.asciidoctor.internal.JRubyRuntimeContext;
-import org.asciidoctor.internal.RubyUtils;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -169,7 +168,7 @@ public class AsciidoctorAntTask extends Task {
             asciidoctor = Asciidoctor.Factory.create(normalizedGemPath);
         }
 
-        String gemHome = JRubyRuntimeContext.get().evalScriptlet("ENV['GEM_HOME']").toString();
+        String gemHome = JRubyRuntimeContext.get(asciidoctor).evalScriptlet("ENV['GEM_HOME']").toString();
         String gemHomeExpected = (gemPath == null || "".equals(gemPath)) ? "" : gemPath.split(java.io.File.pathSeparator)[0];
 
         if (!"".equals(gemHome) && !gemHomeExpected.equals(gemHome)) {
@@ -443,7 +442,7 @@ public class AsciidoctorAntTask extends Task {
 
     /**
      * Safemode can be UNSAFE, SAFE, SERVER, SECURE.
-     * 
+     *
      * @param s New value of safe. Case is ignored. Not required-default is SAFE.
      */
     public void setSafemode(String s) {
