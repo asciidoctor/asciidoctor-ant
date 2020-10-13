@@ -66,7 +66,7 @@
         <jruby.version>9.2.6.0</jruby.version>
         <commons-io.version>2.4</commons-io.version>
 
-        <junit.version>4.11</junit.version>
+        <junit.version>4.13.1</junit.version>
         <assertj-core.version>1.6.0</assertj-core.version>
         <junit-params.version>1.0.3</junit-params.version>
     </properties>
