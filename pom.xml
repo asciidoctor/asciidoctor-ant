@@ -62,7 +62,7 @@
         <asciidoctorj.version>1.6.2</asciidoctorj.version>
         <asciidoctorj-pdf.version>1.5.0-alpha.16</asciidoctorj-pdf.version>
         <asciidoctorj-diagram.version>1.5.12</asciidoctorj-diagram.version>
-        <ant.version>1.8.0</ant.version>
+        <ant.version>1.10.9</ant.version>
         <jruby.version>9.2.6.0</jruby.version>
         <commons-io.version>2.4</commons-io.version>
 
