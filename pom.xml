@@ -64,7 +64,7 @@
         <asciidoctorj-diagram.version>1.5.12</asciidoctorj-diagram.version>
         <ant.version>1.8.0</ant.version>
         <jruby.version>9.2.6.0</jruby.version>
-        <commons-io.version>2.4</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
 
         <junit.version>4.11</junit.version>
         <assertj-core.version>1.6.0</assertj-core.version>
